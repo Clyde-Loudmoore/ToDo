@@ -1,0 +1,112 @@
+$color: #5f5f5f
+$bgcolor: #8ec8d8
+$bncolor: #cde3e9
+$font: 14px 'Inconsolata', monospace
+
+.base
+    width: 350px
+    height: auto
+    margin: 50px auto
+    border: 3px solid $color
+    border-radius: 50px
+    color: $color
+    background-color: $bgcolor
+    font: $font
+
+.header
+    display: flex
+    flex-direction: column
+    text-align: center
+    align-items: center
+    input
+        width: 300px
+        height: 30px
+        padding-left: 15px
+        font: $font
+        border: 1px solid $color
+        border-radius: 10px
+    h1
+        margin-bottom: 0
+    h2
+        margin-top: 15px
+
+.add
+    width: 140px
+    height: 30px
+    padding-left: 15px
+    margin-top: 5px
+    font: $font
+    color: $color
+    background-color: #fff
+    border: 1px solid $color
+    border-radius: 5px
+
+.sort
+    display: flex
+    justify-content: space-around
+    align-items: baseline
+    &_btns
+        margin: 15px 0 25px 0
+        display: flex
+    &_btn
+        font: $font
+        color: $color
+        background-color: $bncolor
+        border: 1px solid $color
+        border-radius: 10px
+    &_date
+        display: flex
+        &__btn
+            border: none
+            background-color: $bgcolor
+            padding: 0
+            margin: 0
+            img
+                width: 20px
+                height: 20px
+                padding: 0
+                margin: 0
+                border: none
+
+.list_left,
+.list_right
+    display: flex
+    align-items: center
+
+.done
+    width: 20px
+    height: 20px
+
+.list ul
+    padding: 0
+    display: flex
+    flex-direction: column
+    align-items: center
+    margin-top: 0
+    li
+        background-color: $bncolor
+        border: 1px solid $color
+        border-radius: 15px
+        list-style-type: none
+        width: 320px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        padding: 5px
+        margin: 3px
+        button
+            border: none
+            background-color: $bncolor
+        img
+            width: 30px
+            height: 30px
+
+.pagenation
+    display: flex
+    justify-content: center
+    padding-bottom: 10px
+    button
+        color: $color
+        font: $font
+        border: 1px solid $color
+        border-radius: 10px
