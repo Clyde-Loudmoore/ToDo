@@ -5,8 +5,12 @@ import Down from "./img/down.png";
 import Up from "./img/up.png";
 import "./App.css";
 
-function App() {
+export default function App() {
   const [todos, setTodos] = useState([]);
+  const [filters, setFilters] = useState({
+    status: "all",
+    sort: "dateAsc",
+  });
 
   const addTask = (userInput) => {
     if (userInput) {
@@ -14,6 +18,7 @@ function App() {
         id: Math.random().toString(36).substring(2, 9),
         task: userInput,
         status: false,
+        createdAt: new Date(),
       };
       setTodos([...todos, newItem]);
     }
@@ -31,18 +36,33 @@ function App() {
     ]);
   };
 
-  const [filtered, setFiltered] = useState(todos);
-  const todoFilter = (status) => {
-    if (status === "all") {
-      setFiltered(todos);
-    } else {
-      let newTodos = todos.filter((todo) => todo.status === status);
-      setFiltered(newTodos);
-    }
-  };
-  useEffect(() => {
-    setFiltered(todos);
-  }, [todos]);
+  const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
+
+  function renderTodos() {
+    return todos
+      .filter((todo) => {
+        if (filters.status === "all") return true;
+        else if (filters.status === "done" && todo.status) {
+          return true;
+        } else if (filters.status === "undone" && !todo.status) {
+          return true;
+        }
+      })
+      .sort((a, b) => {
+        if (filters.sort === "dateAsc") return a.createdAt - b.createdAt;
+        return b.createdAt - a.createdAt;
+      })
+      .map((todo) => {
+        return (
+          <ToDo
+            todo={todo}
+            key={todo.id}
+            toggleTask={hangleToggle}
+            removeTask={removeTask}
+          />
+        );
+      });
+  }
 
   return (
     <div className="App">
@@ -66,14 +86,14 @@ function App() {
             <button
               type="button"
               className="sort_btn"
-              onClick={() => todoFilter(true)}
+              onClick={() => todoFilter("done")}
             >
               Done
             </button>
             <button
               type="button"
               className="sort_btn"
-              onClick={() => todoFilter(false)}
+              onClick={() => todoFilter("undone")}
             >
               Undone
             </button>
@@ -81,24 +101,27 @@ function App() {
           <div className="sort_date">
             <p>Sort by Date</p>
             <button className="sort_date__btn" type="button">
-              <img src={Up} alt="Up" />
+              <img
+                src={Up}
+                alt="Up"
+                onClick={() =>
+                  setFilters((prev) => ({ ...prev, sort: "dateAsc" }))
+                }
+              />
             </button>
             <button className="sort_date__btn" type="button">
-              <img src={Down} alt="Down" />
+              <img
+                src={Down}
+                alt="Down"
+                onClick={() =>
+                  setFilters((prev) => ({ ...prev, sort: "dateDesc" }))
+                }
+              />
             </button>
           </div>
         </div>
 
-        {filtered.map((todo) => {
-          return (
-            <ToDo
-              todo={todo}
-              key={todo.id}
-              toggleTask={hangleToggle}
-              removeTask={removeTask}
-            />
-          );
-        })}
+        {renderTodos()}
 
         <div className="pagenation">
           <button type="button"></button>
@@ -113,5 +136,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

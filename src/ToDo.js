@@ -2,6 +2,8 @@ import React from "react";
 import Delete from "./img/delite.png";
 
 function ToDo({ todo, toggleTask, removeTask }) {
+  const date = new Date().toLocaleTimeString();
+
   return (
     <div key={todo.id} className="list">
       <ul className="todo">
@@ -12,11 +14,12 @@ function ToDo({ todo, toggleTask, removeTask }) {
               className="done"
               checked={todo.status}
               onClick={() => toggleTask(todo.id)}
+              readOnly
             />
             <p>{todo.task}</p>
           </div>
           <div className="list_right">
-            <time></time>
+            <time>{date}</time>
             <button
               className="delete"
               type="button"
