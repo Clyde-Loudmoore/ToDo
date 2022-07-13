@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ToDoForm({ addTask }) {
+export default function ToDoForm({ addTask }) {
   const [userInput, setUserInput] = useState("");
 
   const hangleChange = (e) => {
@@ -33,5 +33,3 @@ function ToDoForm({ addTask }) {
     </form>
   );
 }
-
-export default ToDoForm;
