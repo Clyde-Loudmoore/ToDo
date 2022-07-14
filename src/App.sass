@@ -101,12 +101,26 @@ $font: 14px 'Inconsolata', monospace
             width: 30px
             height: 30px
 
-.pagenation
+.pagination
     display: flex
+    display: flex
+    flex-wrap: wrap
     justify-content: center
-    padding-bottom: 10px
+    padding: 0 15px
+    margin-top: 0
+
+.page-item
+    list-style-type: none
+    padding: 5px
+    width: 20px
+    height: 20px
+    
     button
         color: $color
         font: $font
         border: 1px solid $color
-        border-radius: 10px
+        border-radius: 5px
+        a
+            text-decoration: none
+            color: $color
+            font: $font

@@ -114,14 +114,29 @@
   height: 30px;
 }
 
-.pagenation {
+.pagination {
   display: flex;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  padding-bottom: 10px;
+  padding: 0 15px;
+  margin-top: 0;
 }
-.pagenation button {
+
+.page-item {
+  list-style-type: none;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+}
+.page-item button {
   color: #5f5f5f;
   font: 14px "Inconsolata", monospace;
   border: 1px solid #5f5f5f;
-  border-radius: 10px;
+  border-radius: 5px;
+}
+.page-item button a {
+  text-decoration: none;
+  color: #5f5f5f;
+  font: 14px "Inconsolata", monospace;
 }

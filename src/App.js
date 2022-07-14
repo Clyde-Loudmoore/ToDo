@@ -4,6 +4,7 @@ import ToDo from "./ToDo";
 import Down from "./img/down.png";
 import Up from "./img/up.png";
 import "./App.css";
+import Pagination from "./Components/Pagination";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -12,10 +13,21 @@ export default function App() {
     sort: "dateAsc",
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [todosPerPages] = useState(5);
+
+  const lastTodoIndex = currentPage * todosPerPages;
+  const firstTodoIndex = lastTodoIndex - todosPerPages;
+  const currentTodo = todos.slice(firstTodoIndex, lastTodoIndex);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   const addTask = (userInput) => {
     if (userInput) {
       const newItem = {
-        id: Math.random().toString(36).substring(2, 9),
+        id: Math.random().toString(36),
         task: userInput,
         status: false,
         createdAt: new Date(),
@@ -39,7 +51,7 @@ export default function App() {
   const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
 
   function renderTodos() {
-    return todos
+    return currentTodo
       .filter((todo) => {
         if (filters.status === "all") return true;
         else if (filters.status === "done" && todo.status) {
@@ -123,15 +135,11 @@ export default function App() {
 
         {renderTodos()}
 
-        <div className="pagenation">
-          <button type="button"></button>
-          <button type="button">1</button>
-          <button type="button">2</button>
-          <button type="button">3</button>
-          <button type="button">4</button>
-          <button type="button">5</button>
-          <button type="button"></button>
-        </div>
+        <Pagination
+          todosPerPage={todosPerPages}
+          totalTodos={todos.length}
+          paginate={paginate}
+        />
       </div>
     </div>
   );
