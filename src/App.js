@@ -19,10 +19,18 @@ export default function App() {
   const lastTodoIndex = currentPage * todosPerPages;
   const firstTodoIndex = lastTodoIndex - todosPerPages;
   const currentTodo = todos.slice(firstTodoIndex, lastTodoIndex);
+  const totalTodos = todos.length;
+
+  const pageNumber = [];
+  for (let i = 1; i <= Math.ceil(totalTodos / todosPerPages); i++) {
+    pageNumber.push(i);
+  }
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+
 
   const addTask = (userInput) => {
     if (userInput) {
@@ -82,6 +90,7 @@ export default function App() {
         <header className="header">
           <h1>ToDo</h1>
           <h2>Task list: {todos.length}</h2>
+          <h3>number of pages: {pageNumber.length}</h3>
 
           <ToDoForm addTask={addTask} />
         </header>
@@ -137,8 +146,9 @@ export default function App() {
 
         <Pagination
           todosPerPage={todosPerPages}
-          totalTodos={todos.length}
+          totalTodos={totalTodos}
           paginate={paginate}
+          pageNumber={pageNumber}
         />
       </div>
     </div>
