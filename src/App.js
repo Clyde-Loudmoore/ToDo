@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import ToDoForm from "./Components/Components-ToDoForm/ToDoForm";
 import ToDo from "./Components/Components-ToDo/ToDo";
-import Down from "./img/down.png";
-import Up from "./img/up.png";
 import "./App.css";
 import Pagination from "./Components/Components-Pagination/Pagination";
+import Sort from "./Components/Components-Sort/Sort";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -30,8 +29,6 @@ export default function App() {
     setCurrentPage(pageNumber);
   };
 
-
-
   const addTask = (userInput) => {
     if (userInput) {
       const newItem = {
@@ -56,7 +53,7 @@ export default function App() {
     ]);
   };
 
-  const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
+  
 
   function renderTodos() {
     return currentTodo
@@ -97,52 +94,7 @@ export default function App() {
           <ToDoForm addTask={addTask} />
         </header>
 
-        <div className="sort">
-          <div className="sort_btns">
-            <button
-              type="button"
-              className="sort_btn"
-              onClick={() => todoFilter("all")}
-            >
-              All
-            </button>
-            <button
-              type="button"
-              className="sort_btn"
-              onClick={() => todoFilter("done")}
-            >
-              Done
-            </button>
-            <button
-              type="button"
-              className="sort_btn"
-              onClick={() => todoFilter("undone")}
-            >
-              Undone
-            </button>
-          </div>
-          <div className="sort_date">
-            <p>Sort by Date</p>
-            <button className="sort_date__btn" type="button">
-              <img
-                src={Up}
-                alt="Up"
-                onClick={() =>
-                  setFilters((prev) => ({ ...prev, sort: "dateAsc" }))
-                }
-              />
-            </button>
-            <button className="sort_date__btn" type="button">
-              <img
-                src={Down}
-                alt="Down"
-                onClick={() =>
-                  setFilters((prev) => ({ ...prev, sort: "dateDesc" }))
-                }
-              />
-            </button>
-          </div>
-        </div>
+        <Sort />
 
         {renderTodos()}
 

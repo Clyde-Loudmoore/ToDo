@@ -24,3 +24,6 @@
 .page-item_btn:focus {
   background-color: #d3ba9e;
 }
+.page-item_btn:hover {
+  background-color: #d3ba9e;
+}
