@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Delete from "./img/delite.png";
+import "./ToDo.css";
+import Delete from "../../img/delete.png";
 
 function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
   const date = new Date().toLocaleTimeString();
