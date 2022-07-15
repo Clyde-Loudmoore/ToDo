@@ -8,10 +8,9 @@ const Pagination = ({ paginate, pageNumber }) => {
   return (
     <div>
       <ul className="pagination">
-        <button
-          className="page-item_btn"
-          onClick={() => paginate(firstPage)}
-        ></button>
+        <button className="page-item_btn" onClick={() => paginate(firstPage)}>
+          &lt;&lt;
+        </button>
         {pageNumber.map((number) => (
           <li className="page-item" key={number}>
             <button className="page-item_btn" onClick={() => paginate(number)}>
@@ -19,10 +18,9 @@ const Pagination = ({ paginate, pageNumber }) => {
             </button>
           </li>
         ))}
-        <button
-          className="page-item_btn"
-          onClick={() => paginate(lastPage)}
-        ></button>
+        <button className="page-item_btn" onClick={() => paginate(lastPage)}>
+          &gt;&gt;
+        </button>
       </ul>
     </div>
   );
