@@ -104,13 +104,25 @@ $font: 14px 'Inconsolata', monospace
         justify-content: space-between
         padding: 5px
         margin: 3px
-        button
-            border: none
-            background-color: $bncolor
-            cursor: pointer
         img
             width: 30px
             height: 30px
+.list
+    &_edit, &_save, &_change
+        font: $font
+        color: $color
+        background-color: $bncolor
+        border: 1px solid $color
+        border-radius: 10px
+        cursor: pointer
+        &:hover
+            background-color: #d3ba9e
+    &_delete
+        border: none
+        background-color: $bncolor
+        cursor: pointer
+.list_change
+    background-color: #ffffff
 
 .pagination
     display: flex

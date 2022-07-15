@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ToDoForm from "./ToDoForm";
 import ToDo from "./ToDo";
 import Down from "./img/down.png";
@@ -77,6 +77,8 @@ export default function App() {
           <ToDo
             todo={todo}
             key={todo.id}
+            todos={todos}
+            setTodos={setTodos}
             toggleTask={hangleToggle}
             removeTask={removeTask}
           />
