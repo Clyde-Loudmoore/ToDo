@@ -22,11 +22,11 @@ export default function ToDoForm({ addTask }) {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        className="message"
         value={userInput}
         type="text"
         onChange={hangleChange}
         onKeyDown={handleKeyPress}
-        className="message"
         placeholder="I want to..."
       />
       <button className="add">Add</button>
