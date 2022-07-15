@@ -4,7 +4,7 @@ import ToDo from "./Components/Components-ToDo/ToDo";
 import Down from "./img/down.png";
 import Up from "./img/up.png";
 import "./App.css";
-import Pagination from "./Components/Pagination";
+import Pagination from "./Components/Components-Pagination/Pagination";
 
 export default function App() {
   const [todos, setTodos] = useState([]);

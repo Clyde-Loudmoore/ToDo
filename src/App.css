@@ -70,30 +70,3 @@
   margin: 0;
   border: none;
 }
-
-.pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0 15px;
-  margin: 0 0 23px 0;
-}
-
-.page-item {
-  display: flex;
-  list-style-type: none;
-  padding: 3px;
-}
-.page-item_btn {
-  color: #5f5f5f;
-  font: 14px "Inconsolata", monospace;
-  border: 1px solid #5f5f5f;
-  border-radius: 5px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
-.page-item_btn:focus {
-  background-color: #d3ba9e;
-}
