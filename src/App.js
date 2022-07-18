@@ -55,7 +55,6 @@ export default function App() {
     ]);
   };
 
-  console.log(pagesCount);
   useEffect(() => {
     const countOfTodos = todos.filter((todo) => {
       if (filters.status === "all") return true;
