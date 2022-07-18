@@ -20,7 +20,7 @@ $font: 14px 'Inconsolata', monospace
     align-items: center
     margin-top: 0
     li
-        height: 44px
+        min-height: 44px
         background-color: $bncolor
         border: 1px solid $color
         border-radius: 15px
@@ -29,6 +29,7 @@ $font: 14px 'Inconsolata', monospace
         display: flex
         align-items: center
         justify-content: space-between
+        flex-wrap: wrap
         padding: 5px
         margin: 3px
         img
@@ -51,3 +52,4 @@ $font: 14px 'Inconsolata', monospace
         cursor: pointer
 .list_change
     background-color: #ffffff
+    height: auto

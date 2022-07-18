@@ -2,8 +2,8 @@ import React from "react";
 import "./Pagination.css";
 
 const Pagination = ({ paginate, pageNumber }) => {
-  const firstPage = +pageNumber[0];
-  const lastPage = +pageNumber.slice(-1);
+  const firstPage = pageNumber[0];
+  const lastPage = pageNumber.slice(-1);
 
   return (
     <div>

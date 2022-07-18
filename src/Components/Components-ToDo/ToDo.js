@@ -3,7 +3,7 @@ import "./ToDo.css";
 import Delete from "../../img/delete.png";
 
 function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
-  const date = new Date().toLocaleTimeString();
+  const date = new Date().toLocaleTimeString();  //shit
 
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");

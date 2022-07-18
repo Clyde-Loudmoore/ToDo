@@ -3,8 +3,7 @@ import ToDoForm from "./Components/Components-ToDoForm/ToDoForm";
 import ToDo from "./Components/Components-ToDo/ToDo";
 import "./App.css";
 import Pagination from "./Components/Components-Pagination/Pagination";
-import Down from "./img/down.png";
-import Up from "./img/up.png";
+import Sort from "./Components/Components-Sort/Sort";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -13,10 +12,10 @@ export default function App() {
     sort: "dateAsc",
   });
 
-  const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
-
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPages] = useState(5);
+
+  const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
 
   const lastTodoIndex = currentPage * todosPerPages;
   const firstTodoIndex = lastTodoIndex - todosPerPages;
@@ -94,56 +93,8 @@ export default function App() {
 
           <ToDoForm addTask={addTask} />
         </header>
-
-        <div className="sort">
-          <div className="sort_btns">
-            <button
-              type="button"
-              className="sort_btn"
-              onClick={() => todoFilter("all")}
-            >
-              All
-            </button>
-            <button
-              type="button"
-              className="sort_btn"
-              onClick={() => todoFilter("done")}
-            >
-              Done
-            </button>
-            <button
-              type="button"
-              className="sort_btn"
-              onClick={() => todoFilter("undone")}
-            >
-              Undone
-            </button>
-          </div>
-          <div className="sort_date">
-            <p>Sort by Date</p>
-            <button className="sort_date__btn" type="button">
-              <img
-                src={Up}
-                alt="Up"
-                onClick={() =>
-                  setFilters((prev) => ({ ...prev, sort: "dateAsc" }))
-                }
-              />
-            </button>
-            <button className="sort_date__btn" type="button">
-              <img
-                src={Down}
-                alt="Down"
-                onClick={() =>
-                  setFilters((prev) => ({ ...prev, sort: "dateDesc" }))
-                }
-              />
-            </button>
-          </div>
-        </div>
-
+        <Sort setFilters={setFilters} todoFilter={todoFilter} />
         {renderTodos()}
-
         <Pagination
           todosPerPage={todosPerPages}
           totalTodos={totalTodos}
