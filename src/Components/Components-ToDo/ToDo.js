@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ToDo.css";
 import Delete from "../../img/delete.png";
 
-function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
+function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
   const date =
     new Date().getDate() +
     "/" +
@@ -18,15 +18,25 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
     setValue(task);
   };
 
-  const saveTodo = (id, value) => {
+  const saveTodo = (e, id) => {
+    const title = value;
     const newTodo = todos.map((todo) => {
       if (todo.id === id) {
-        todo.task = value;
+        todo.task = title;
       }
       return todo;
     });
     setTodos(newTodo);
     setEdit(null);
+  };
+
+  const handlePressKey = (e, id) => {
+    if (e.key === "Enter") {
+      saveTodo(e, id);
+    }
+    if (e.key === "Escape") {
+      setEdit(false);
+    }
   };
 
   return (
@@ -45,9 +55,11 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
           {edit ? (
             <div>
               <input
+                autoFocus
                 className="list_change"
                 onChange={(e) => setValue(e.target.value)}
                 value={value}
+                onKeyDown={(e) => handlePressKey(e, todo.id)}
               />
             </div>
           ) : (

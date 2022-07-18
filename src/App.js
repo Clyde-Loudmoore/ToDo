@@ -18,10 +18,6 @@ export default function App() {
 
   const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
 
-  // const firstTodoIndex = currentPage * todosPerPages;
-  // const lastTodoIndex = firstTodoIndex + todosPerPages;
-  // const currentTodo = todos.slice(firstTodoIndex, lastTodoIndex);
-
   const pageNumber = [];
   for (let i = 1; i <= Math.ceil(pagesCount / todosPerPages); i++) {
     pageNumber.push(i);
