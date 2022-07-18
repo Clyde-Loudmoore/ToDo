@@ -8,31 +8,31 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
     "/" +
     `${new Date().getMonth() + 1}` +
     "/" +
-    new Date().getFullYear();
+    new Date().getFullYear(); //shit
 
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");
 
   const editTodo = (id, task) => {
+    //неиспользуемое - выпиливаем
     setEdit(true);
     setValue(task);
   };
 
-  const saveTodo = (e, id) => {
+  const saveTodo = (id) => {
+    console.log(id);
     const title = value;
-    const newTodo = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.task = title;
-      }
-      return todo;
-    });
-    setTodos(newTodo);
-    setEdit(null);
+    setTodos([
+      ...todos.map((todo) =>
+        todo.id === id ? { ...todo, task: title } : { ...todo }
+      ),
+    ]);
+    setEdit(false);
   };
 
   const handlePressKey = (e, id) => {
     if (e.key === "Enter") {
-      saveTodo(e, id);
+      saveTodo(id);
     }
     if (e.key === "Escape") {
       setEdit(false);
