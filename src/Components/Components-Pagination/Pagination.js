@@ -1,24 +1,24 @@
 import React from "react";
 import "./Pagination.css";
 
-const Pagination = ({ paginate, pageNumber }) => {
-  const firstPage = pageNumber[0];
-  const lastPage = pageNumber.slice(-1);
-
+const Pagination = ({ paginate, totalTodos }) => {
   return (
     <div>
       <ul className="pagination">
-        <button className="page-item_btn" onClick={() => paginate(firstPage)}>
+        <button className="page-item_btn" onClick={() => paginate(1)}>
           &lt;&lt;
         </button>
-        {pageNumber.map((number) => (
-          <li className="page-item" key={number}>
-            <button className="page-item_btn" onClick={() => paginate(number)}>
-              {number}
+        {Array.from(Array(totalTodos).keys()).map((number, index) => (
+          <li className="page-item" key={index + 1}>
+            <button
+              className="page-item_btn"
+              onClick={() => paginate(index + 1)}
+            >
+              {index + 1}
             </button>
           </li>
         ))}
-        <button className="page-item_btn" onClick={() => paginate(lastPage)}>
+        <button className="page-item_btn" onClick={() => paginate(totalTodos)}>
           &gt;&gt;
         </button>
       </ul>
