@@ -11,10 +11,26 @@ export default function App() {
   const [filters, setFilters] = useState({
     status: "all",
     sort: "dateAsc",
+    reverse: todos.reverse(),
   });
 
   const [currentPage, setCurrentPage] = useState(1);
   const todosPerPages = 5;
+
+  const [userInput, setUserInput] = useState("");
+  const [value, setValue] = useState("");
+  const [edit, setEdit] = useState(false);
+
+  const editTaskOnButton = (id, value) => {
+    const title = value;
+    if (title) {
+      const newTask = todos.map((item) =>
+        item.id === id ? { ...item, task: title, edit: false } : { ...item }
+      );
+      setValue("");
+      setTodos(newTask);
+    }
+  };
 
   const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
 
@@ -34,6 +50,7 @@ export default function App() {
         task: userInput,
         status: false,
         createdAt: new Date(),
+        edit: false,
       };
       setTodos([...todos, newItem]);
     }
@@ -63,7 +80,7 @@ export default function App() {
     setPagesCount(Math.ceil(countOfTodos / todosPerPages));
   }, [filters, todos]);
 
-  function renderTodos() {
+  const renderTodos = () => {
     const filteredTodos = todos.filter((todo) => {
       if (filters.status === "all") return true;
       else if (filters.status === "done" && todo.status) {
@@ -91,10 +108,15 @@ export default function App() {
             setTodos={setTodos}
             toggleTask={hangleToggle}
             removeTask={removeTask}
+            value={value}
+            setValue={setValue}
+            edit={edit}
+            setEdit={setEdit}
+            editTaskOnButton={editTaskOnButton}
           />
         );
       });
-  }
+  };
 
   return (
     <div className="App">
@@ -104,12 +126,17 @@ export default function App() {
           <h2>Task list: {todos.length}</h2>
           <h3>number of pages: {pagesCount}</h3>
 
-          <ToDoForm addTask={addTask} />
+          <ToDoForm
+            addTask={addTask}
+            userInput={userInput}
+            setUserInput={setUserInput}
+          />
         </header>
         <Sort
           setCurrentPage={setCurrentPage}
           setFilters={setFilters}
           todoFilter={todoFilter}
+          todos={todos}
         />
         {renderTodos()}
         <Pagination

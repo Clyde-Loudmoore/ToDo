@@ -3,7 +3,7 @@ import Down from "../../img/down.png";
 import Up from "../../img/up.png";
 import "./Sort.css";
 
-function Sort({ todoFilter, setFilters, setCurrentPage }) {
+function Sort({ todoFilter, setFilters, setCurrentPage, todos }) {
   return (
     <div className="sort">
       <div className="sort_btns">
@@ -44,7 +44,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage }) {
           <img
             src={Up}
             alt="Up"
-            onClick={() => setFilters((prev) => ({ ...prev, sort: "dateAsc" }))}
+            onClick={() => setFilters((prev) => ({ ...prev, sort: "dateAsc", reverse: todos.reverse() }))}
           />
         </button>
         <button className="sort_date__btn" type="button">
@@ -52,7 +52,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage }) {
             src={Down}
             alt="Down"
             onClick={() =>
-              setFilters((prev) => ({ ...prev, sort: "dateDesc" }))
+              setFilters((prev) => ({ ...prev, sort: "dateDesc", reverse: todos.reverse() }))
             }
           />
         </button>

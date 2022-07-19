@@ -1,43 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ToDo.css";
 import Delete from "../../img/delete.png";
 
+function ToDo({
+  todos,
+  todo,
+  toggleTask,
+  removeTask,
+  setTodos,
+  value,
+  setValue,
+  editTaskOnButton,
+}) {
+  const editTodo = (id) => {
+    const changedStatusInput = todos.map((todo) =>
+      todo.id === id ? { ...todo, edit: !todo.edit } : todo
+    );
+    setTodos(changedStatusInput);
 
-function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
-  // const date =
-  //   new Date().getDate() +
-  //   "/" +
-  //   `${new Date().getMonth() + 1}` +
-  //   "/" +
-  //   new Date().getFullYear(); //shit
-  
-  // const date = new Date();
-
-
-  const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState("");
-
-  const editTodo = (task) => {
-    setEdit(true);
-    setValue(task);
-  };
-
-  const saveTodo = (id) => {
-    const title = value;
-    setTodos([
-      ...todos.map((todo) =>
-        todo.id === id ? { ...todo, task: title } : todo
-      ),
-    ]);
-    setEdit(false);
+    editTaskOnButton(id);
   };
 
   const handlePressKey = (e, id) => {
     if (e.key === "Enter") {
-      saveTodo(id);
+      editTaskOnButton(id, value);
     }
     if (e.key === "Escape") {
-      setEdit(false);
+      editTodo(id);
     }
   };
 
@@ -54,14 +43,15 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
               readOnly
             />
           </div>
-          {edit ? (
+          {todo.edit ? (
             <div>
               <input
                 autoFocus
                 className="list_change"
                 onChange={(e) => setValue(e.target.value)}
-                value={value}
+                value={value || todo.task}
                 onKeyDown={(e) => handlePressKey(e, todo.id)}
+                placeholder={todo.task}
               />
             </div>
           ) : (
@@ -69,16 +59,16 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
               <p>{todo.task}</p>
             </div>
           )}
-          {edit ? (
+          {todo.edit ? (
             <button
               className="list_save"
-              onClick={() => saveTodo(todo.id, value)}
+              onClick={() => editTaskOnButton(todo.id, value)}
             >
               save
             </button>
           ) : (
             <div className="list_right">
-              <button className="list_edit" onClick={() => editTodo(todo.task)}>
+              <button className="list_edit" onClick={() => editTodo(todo.id)}>
                 edit
               </button>
               <time>{todo.createdAt.toLocaleTimeString()}</time>
