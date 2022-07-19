@@ -33,12 +33,13 @@ export default function App() {
         id: Math.random().toString(36),
         task: userInput,
         status: false,
-        createdAt: new Date(),
+        createdAt: new Date().toLocaleDateString(),
       };
       setTodos([...todos, newItem]);
+      console.log(newItem.createdAt);
     }
   };
-
+  
   const removeTask = (id) => {
     setTodos([...todos.filter((todo) => todo.id !== id)]);
   };
@@ -91,6 +92,8 @@ export default function App() {
             setTodos={setTodos}
             toggleTask={hangleToggle}
             removeTask={removeTask}
+            
+            
           />
         );
       });

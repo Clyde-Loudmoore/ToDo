@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import "./ToDo.css";
 import Delete from "../../img/delete.png";
 
-function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
-  const date =
-    new Date().getDate() +
-    "/" +
-    `${new Date().getMonth() + 1}` +
-    "/" +
-    new Date().getFullYear(); //shit
+
+function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
+  // const date =
+  //   new Date().getDate() +
+  //   "/" +
+  //   `${new Date().getMonth() + 1}` +
+  //   "/" +
+  //   new Date().getFullYear(); //shit
+  
+  // const date = new Date();
+
 
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");
@@ -22,7 +26,7 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
     const title = value;
     setTodos([
       ...todos.map((todo) =>
-        todo.id === id ? { ...todo, task: title } : { ...todo }
+        todo.id === id ? { ...todo, task: title } : todo
       ),
     ]);
     setEdit(false);
@@ -77,7 +81,7 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
               <button className="list_edit" onClick={() => editTodo(todo.task)}>
                 edit
               </button>
-              <time>{date}</time>
+              <time>{todo.createdAt}</time>
               <button
                 className="list_delete"
                 type="button"
