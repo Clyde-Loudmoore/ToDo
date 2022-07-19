@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ToDoForm.css";
 
-export default function ToDoForm({ addTask }) {
-  const [userInput, setUserInput] = useState("");
-
+export default function ToDoForm({ addTask, userInput, setUserInput }) {
   const hangleChange = (e) => {
     setUserInput(e.currentTarget.value);
   };
