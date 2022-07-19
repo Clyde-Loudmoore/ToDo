@@ -53,6 +53,9 @@
   background-color: #cde3e9;
   cursor: pointer;
 }
+.list_between {
+  max-width: 115px;
+}
 
 .list_change {
   background-color: #ffffff;

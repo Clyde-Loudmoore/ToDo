@@ -13,14 +13,12 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");
 
-  const editTodo = (id, task) => {
-    //неиспользуемое - выпиливаем
+  const editTodo = (task) => {
     setEdit(true);
     setValue(task);
   };
 
   const saveTodo = (id) => {
-    console.log(id);
     const title = value;
     setTodos([
       ...todos.map((todo) =>
@@ -63,7 +61,9 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
               />
             </div>
           ) : (
-            <p>{todo.task}</p>
+            <div className="list_between">
+              <p>{todo.task}</p>
+            </div>
           )}
           {edit ? (
             <button
@@ -74,10 +74,7 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos, userInput }) {
             </button>
           ) : (
             <div className="list_right">
-              <button
-                className="list_edit"
-                onClick={() => editTodo(todo.id, todo.task)}
-              >
+              <button className="list_edit" onClick={() => editTodo(todo.task)}>
                 edit
               </button>
               <time>{date}</time>
