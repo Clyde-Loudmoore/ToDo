@@ -81,7 +81,7 @@ function ToDo({ todos, todo, toggleTask, removeTask, setTodos }) {
               <button className="list_edit" onClick={() => editTodo(todo.task)}>
                 edit
               </button>
-              <time>{todo.createdAt}</time>
+              <time>{todo.createdAt.toLocaleTimeString()}</time>
               <button
                 className="list_delete"
                 type="button"
