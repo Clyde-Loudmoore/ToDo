@@ -10,20 +10,24 @@ function ToDo({
   setTodos,
   value,
   setValue,
-  editTaskOnButton,
+  saveTodo,
+  edit,
+  setEdit,
 }) {
   const editTodo = (id) => {
-    const changedStatusInput = todos.map((todo) =>
-      todo.id === id ? { ...todo, edit: !todo.edit } : todo
+    setTodos([
+      ...todos].map((todo) =>
+        todo.id === id ? { ...todo, edit: !todo.edit } : todo
+      ),
     );
-    setTodos(changedStatusInput);
-
-    editTaskOnButton(id);
+    saveTodo(id);
+    setEdit(null);
+    console.log(todo);
   };
 
   const handlePressKey = (e, id) => {
     if (e.key === "Enter") {
-      editTaskOnButton(id, value);
+      saveTodo(id, value);
     }
     if (e.key === "Escape") {
       editTodo(id);
@@ -46,12 +50,13 @@ function ToDo({
           {todo.edit ? (
             <div>
               <input
+                key={todo.id}
                 autoFocus
                 className="list_change"
                 onChange={(e) => setValue(e.target.value)}
                 value={value || todo.task}
                 onKeyDown={(e) => handlePressKey(e, todo.id)}
-                placeholder={todo.task}
+                onBlur={()=> editTodo(todo.id)}
               />
             </div>
           ) : (
@@ -62,7 +67,7 @@ function ToDo({
           {todo.edit ? (
             <button
               className="list_save"
-              onClick={() => editTaskOnButton(todo.id, value)}
+              onClick={() => saveTodo(todo.id, value)}
             >
               save
             </button>

@@ -44,7 +44,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage, todos }) {
           <img
             src={Up}
             alt="Up"
-            onClick={() => setFilters((prev) => ({ ...prev, sort: "dateAsc", reverse: todos.reverse() }))}
+            onClick={() => setFilters((prev) => ({ ...prev, sort: "dateAsc" }))}
           />
         </button>
         <button className="sort_date__btn" type="button">
@@ -52,7 +52,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage, todos }) {
             src={Down}
             alt="Down"
             onClick={() =>
-              setFilters((prev) => ({ ...prev, sort: "dateDesc", reverse: todos.reverse() }))
+              setFilters((prev) => ({ ...prev, sort: "dateDesc" }))
             }
           />
         </button>

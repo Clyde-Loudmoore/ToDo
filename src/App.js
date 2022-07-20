@@ -11,7 +11,7 @@ export default function App() {
   const [filters, setFilters] = useState({
     status: "all",
     sort: "dateAsc",
-    reverse: todos.reverse(),
+    // reverse: todos.reverse(),
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,16 +19,17 @@ export default function App() {
 
   const [userInput, setUserInput] = useState("");
   const [value, setValue] = useState("");
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(null);
 
-  const editTaskOnButton = (id, value) => {
+  const saveTodo = (id) => {
     const title = value;
     if (title) {
-      const newTask = todos.map((item) =>
-        item.id === id ? { ...item, task: title, edit: false } : { ...item }
+      setTodos(
+        [...todos].map((item) =>
+          item.id === id ? { ...item, task: title, edit: false } : item
+        )
       );
       setValue("");
-      setTodos(newTask);
     }
   };
 
@@ -63,7 +64,7 @@ export default function App() {
   const hangleToggle = (id) => {
     setTodos([
       ...todos.map((todo) =>
-        todo.id === id ? { ...todo, status: !todo.status } : { ...todo }
+        todo.id === id ? { ...todo, status: !todo.status } : todo
       ),
     ]);
   };
@@ -89,16 +90,15 @@ export default function App() {
         return true;
       }
     });
-
-    return filteredTodos
-      .slice(
-        (currentPage - 1) * todosPerPages,
-        (currentPage - 1) * todosPerPages + todosPerPages
-      )
+    return todos
       .sort((a, b) => {
         if (filters.sort === "dateAsc") return a.createdAt - b.createdAt;
         return b.createdAt - a.createdAt;
       })
+      .slice(
+        (currentPage - 1) * todosPerPages,
+        (currentPage - 1) * todosPerPages + todosPerPages
+      )
       .map((todo) => {
         return (
           <ToDo
@@ -112,12 +112,12 @@ export default function App() {
             setValue={setValue}
             edit={edit}
             setEdit={setEdit}
-            editTaskOnButton={editTaskOnButton}
+            saveTodo={saveTodo}
           />
         );
       });
   };
-
+  console.log(todos);
   return (
     <div className="App">
       <div className="base">
