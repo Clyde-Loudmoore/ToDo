@@ -5,22 +5,20 @@ import Delete from "../../img/delete.png";
 function ToDo({
   todos,
   todo,
-  toggleTask,
+  hangleToggle,
   removeTask,
   setTodos,
   value,
   setValue,
   saveTodo,
-  setEdit,
 }) {
   const editTodo = (id) => {
     setTodos(
-      [...todos].map((todo) =>
+      todos.map((todo) =>
         todo.id === id ? { ...todo, edit: !todo.edit } : todo
       )
     );
-    saveTodo(id);
-    setEdit(null);
+    setValue(todo.task);
   };
 
   const handlePressKey = (e, id) => {
@@ -41,20 +39,20 @@ function ToDo({
               type="checkbox"
               className="done"
               checked={todo.status}
-              onClick={() => toggleTask(todo.id)}
+              onClick={() => hangleToggle(todo.id)}
               readOnly
             />
           </div>
           {todo.edit ? (
             <div>
               <input
-                key={todo.id}
                 autoFocus
+                key={todo.id}
                 className="list_change"
                 onChange={(e) => setValue(e.target.value)}
-                value={value || todo.task}
-                onKeyDown={(e) => handlePressKey(e, todo.id)}
+                value={value}
                 onBlur={() => editTodo(todo.id)}
+                onKeyDown={(e) => handlePressKey(e, todo.id)}
               />
             </div>
           ) : (

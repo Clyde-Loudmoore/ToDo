@@ -14,18 +14,19 @@ function RenderTodos({
   edit,
   setEdit,
   saveTodo,
+  statusFilter,
 }) {
   const filteredTodos = todos.filter((todo) => {
-    if (filters.status === "all") return true;
-    else if (filters.status === "done" && todo.status) {
+    if (statusFilter.status === 0) return true;
+    else if (statusFilter.status === 1 && todo.status) {
       return true;
-    } else if (filters.status === "undone" && !todo.status) {
+    } else if (statusFilter.status === 2 && !todo.status) {
       return true;
     }
   });
   return filteredTodos
     .sort((a, b) => {
-      if (filters.sort === "dateAsc") return a.createdAt - b.createdAt;
+      if (filters.sort === 0) return a.createdAt - b.createdAt;
       return b.createdAt - a.createdAt;
     })
     .slice(
@@ -39,7 +40,7 @@ function RenderTodos({
           key={todo.id}
           todos={todos}
           setTodos={setTodos}
-          toggleTask={hangleToggle}
+          hangleToggle={hangleToggle}
           removeTask={removeTask}
           value={value}
           setValue={setValue}
