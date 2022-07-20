@@ -11,18 +11,16 @@ function ToDo({
   value,
   setValue,
   saveTodo,
-  edit,
   setEdit,
 }) {
   const editTodo = (id) => {
-    setTodos([
-      ...todos].map((todo) =>
+    setTodos(
+      [...todos].map((todo) =>
         todo.id === id ? { ...todo, edit: !todo.edit } : todo
-      ),
+      )
     );
     saveTodo(id);
     setEdit(null);
-    console.log(todo);
   };
 
   const handlePressKey = (e, id) => {
@@ -56,7 +54,7 @@ function ToDo({
                 onChange={(e) => setValue(e.target.value)}
                 value={value || todo.task}
                 onKeyDown={(e) => handlePressKey(e, todo.id)}
-                onBlur={()=> editTodo(todo.id)}
+                onBlur={() => editTodo(todo.id)}
               />
             </div>
           ) : (

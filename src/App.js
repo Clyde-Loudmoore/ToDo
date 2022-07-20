@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ToDoForm from "./Components/Components-ToDoForm/ToDoForm";
-import ToDo from "./Components/Components-ToDo/ToDo";
+
 import "./App.css";
 import Pagination from "./Components/Components-Pagination/Pagination";
 import Sort from "./Components/Components-Sort/Sort";
+import RenderTodos from "./Components/Components-RenderTodos/RenderTodos";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -11,7 +12,6 @@ export default function App() {
   const [filters, setFilters] = useState({
     status: "all",
     sort: "dateAsc",
-    // reverse: todos.reverse(),
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +25,7 @@ export default function App() {
     const title = value;
     if (title) {
       setTodos(
-        [...todos].map((item) =>
+        todos.map((item) =>
           item.id === id ? { ...item, task: title, edit: false } : item
         )
       );
@@ -33,7 +33,7 @@ export default function App() {
     }
   };
 
-  const todoFilter = (status) => setFilters((prev) => ({ ...prev, status }));
+  const todoFilter = (status) => setFilters((prev) => ({ ...prev, status })); //prev check
 
   const pageNumber = [];
   for (let i = 1; i <= Math.ceil(pagesCount / todosPerPages); i++) {
@@ -51,7 +51,6 @@ export default function App() {
         task: userInput,
         status: false,
         createdAt: new Date(),
-        edit: false,
       };
       setTodos([...todos, newItem]);
     }
@@ -81,43 +80,6 @@ export default function App() {
     setPagesCount(Math.ceil(countOfTodos / todosPerPages));
   }, [filters, todos]);
 
-  const renderTodos = () => {
-    const filteredTodos = todos.filter((todo) => {
-      if (filters.status === "all") return true;
-      else if (filters.status === "done" && todo.status) {
-        return true;
-      } else if (filters.status === "undone" && !todo.status) {
-        return true;
-      }
-    });
-    return todos
-      .sort((a, b) => {
-        if (filters.sort === "dateAsc") return a.createdAt - b.createdAt;
-        return b.createdAt - a.createdAt;
-      })
-      .slice(
-        (currentPage - 1) * todosPerPages,
-        (currentPage - 1) * todosPerPages + todosPerPages
-      )
-      .map((todo) => {
-        return (
-          <ToDo
-            todo={todo}
-            key={todo.id}
-            todos={todos}
-            setTodos={setTodos}
-            toggleTask={hangleToggle}
-            removeTask={removeTask}
-            value={value}
-            setValue={setValue}
-            edit={edit}
-            setEdit={setEdit}
-            saveTodo={saveTodo}
-          />
-        );
-      });
-  };
-  console.log(todos);
   return (
     <div className="App">
       <div className="base">
@@ -138,7 +100,20 @@ export default function App() {
           todoFilter={todoFilter}
           todos={todos}
         />
-        {renderTodos()}
+        <RenderTodos
+          todos={todos}
+          filters={filters}
+          currentPage={currentPage}
+          todosPerPages={todosPerPages}
+          setTodos={setTodos}
+          toggleTask={hangleToggle}
+          removeTask={removeTask}
+          value={value}
+          setValue={setValue}
+          edit={edit}
+          setEdit={setEdit}
+          saveTodo={saveTodo}
+        />
         <Pagination
           todosPerPage={todosPerPages}
           totalTodos={pagesCount}
