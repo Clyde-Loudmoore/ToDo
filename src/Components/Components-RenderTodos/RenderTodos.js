@@ -16,11 +16,9 @@ function RenderTodos({
   saveTodo,
   sortedTasks,
 }) {
-
-
   return sortedTasks
     .sort((a, b) => {
-      if (filters.sort === 0) return a.createdAt - b.createdAt;
+      if (filters === 0) return a.createdAt - b.createdAt;
       return b.createdAt - a.createdAt;
     })
     .slice(

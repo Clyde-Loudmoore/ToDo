@@ -5,23 +5,19 @@ import "./App.css";
 import Pagination from "./Components/Components-Pagination/Pagination";
 import Sort from "./Components/Components-Sort/Sort";
 import RenderTodos from "./Components/Components-RenderTodos/RenderTodos";
-
+const todosPerPages = 5;
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [pagesCount, setPagesCount] = useState(todos.length);
-  const [filters, setFilters] = useState({
-    sort: 0,
-  });
+  const [filters, setFilters] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const todosPerPages = 5;
+  
 
   const [userInput, setUserInput] = useState("");
   const [value, setValue] = useState("");
 
-  const [statusFilter, setStatusFilter] = useState({
-    status: 0,
-  });
+  const [statusFilter, setStatusFilter] = useState(0);
 
   const [sortedTasks, setSortedTasks] = useState([]);
 
@@ -37,8 +33,7 @@ export default function App() {
     }
   };
 
-  const todoFilter = (status) =>
-    setStatusFilter((prev) => ({ ...prev, status }));
+  const todoFilter = (status) => setStatusFilter(status);
   const pageNumber = [];
   for (let i = 1; i <= Math.ceil(pagesCount / todosPerPages); i++) {
     pageNumber.push(i);
@@ -74,17 +69,17 @@ export default function App() {
 
   useEffect(() => {
     const countOfTodos = todos.filter((todo) => {
-      if (statusFilter.status === 0) return true;
-      else if (statusFilter.status === 1 && todo.status) {
+      if (statusFilter === 0) return true;
+      else if (statusFilter === 1 && todo.status) {
         return true;
-      } else if (statusFilter.status === 2 && !todo.status) {
+      } else if (statusFilter === 2 && !todo.status) {
         return true;
       }
     });
 
     setSortedTasks(countOfTodos);
     setPagesCount(Math.ceil(countOfTodos.length / todosPerPages));
-  }, [filters, todos]);
+  }, [filters, todos, statusFilter]);
 
   return (
     <div className="App">

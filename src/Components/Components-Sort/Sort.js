@@ -41,18 +41,10 @@ function Sort({ todoFilter, setFilters, setCurrentPage }) {
       <div className="sort_date">
         <p>Sort by Date</p>
         <button className="sort_date__btn" type="button">
-          <img
-            src={Up}
-            alt="Up"
-            onClick={() => setFilters((prev) => ({ ...prev, sort: 0 }))}
-          />
+          <img src={Up} alt="Up" onClick={() => setFilters(0)} />
         </button>
         <button className="sort_date__btn" type="button">
-          <img
-            src={Down}
-            alt="Down"
-            onClick={() => setFilters((prev) => ({ ...prev, sort: 1 }))}
-          />
+          <img src={Down} alt="Down" onClick={() => setFilters(1)} />
         </button>
       </div>
     </div>
