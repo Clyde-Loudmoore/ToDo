@@ -1,18 +1,31 @@
-import React, { useEffect, useState } from "react";
-import ToDoForm from "./Components/Components-ToDoForm/ToDoForm";
+import axios from "axios";
 
+import React, { useEffect, useState } from "react";
+import ToDoForm from "./Components/ToDoForm/ToDoForm";
 import "./App.css";
-import Pagination from "./Components/Components-Pagination/Pagination";
-import Sort from "./Components/Components-Sort/Sort";
-import RenderTodos from "./Components/Components-RenderTodos/RenderTodos";
+import Pagination from "./Components/Pagination/Pagination";
+import Sort from "./Components/Sort/Sort";
+import RenderTodos from "./Components/RenderTodos/RenderTodos";
+
 const todosPerPages = 5;
+
+// axios
+//   .get(
+//     "https://todo-api-learning.herokuapp.com/v1/tasks/1?order=asc&pp=5&page=1"
+//   )
+//   .then((response) => {
+//     console.log(response.data);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
+
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [pagesCount, setPagesCount] = useState(todos.length);
   const [filters, setFilters] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
-  
 
   const [userInput, setUserInput] = useState("");
   const [value, setValue] = useState("");

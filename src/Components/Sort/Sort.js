@@ -2,6 +2,7 @@ import React from "react";
 import Down from "../../img/down.png";
 import Up from "../../img/up.png";
 import "./Sort.css";
+import axios from "axios";
 
 function Sort({ todoFilter, setFilters, setCurrentPage }) {
   return (

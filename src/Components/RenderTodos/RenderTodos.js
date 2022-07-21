@@ -1,5 +1,5 @@
 import React from "react";
-import ToDo from "../Components-ToDo/ToDo";
+import ToDo from "../ToDo/ToDo";
 
 function RenderTodos({
   todos,
