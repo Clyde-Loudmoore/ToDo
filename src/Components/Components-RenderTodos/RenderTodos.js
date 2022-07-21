@@ -14,17 +14,11 @@ function RenderTodos({
   edit,
   setEdit,
   saveTodo,
-  statusFilter,
+  sortedTasks,
 }) {
-  const filteredTodos = todos.filter((todo) => {
-    if (statusFilter.status === 0) return true;
-    else if (statusFilter.status === 1 && todo.status) {
-      return true;
-    } else if (statusFilter.status === 2 && !todo.status) {
-      return true;
-    }
-  });
-  return filteredTodos
+
+
+  return sortedTasks
     .sort((a, b) => {
       if (filters.sort === 0) return a.createdAt - b.createdAt;
       return b.createdAt - a.createdAt;
@@ -51,5 +45,4 @@ function RenderTodos({
       );
     });
 }
-
 export default RenderTodos;

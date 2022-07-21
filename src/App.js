@@ -23,6 +23,8 @@ export default function App() {
     status: 0,
   });
 
+  const [sortedTasks, setSortedTasks] = useState([]);
+
   const saveTodo = (id) => {
     const title = value;
     if (title) {
@@ -78,11 +80,12 @@ export default function App() {
       } else if (statusFilter.status === 2 && !todo.status) {
         return true;
       }
-    }).length;
-    setPagesCount(Math.ceil(countOfTodos / todosPerPages));
+    });
+
+    setSortedTasks(countOfTodos);
+    setPagesCount(Math.ceil(countOfTodos.length / todosPerPages));
   }, [filters, todos]);
 
-  
   return (
     <div className="App">
       <div className="base">
@@ -114,6 +117,7 @@ export default function App() {
           setValue={setValue}
           saveTodo={saveTodo}
           statusFilter={statusFilter}
+          sortedTasks={sortedTasks}
         />
         <Pagination
           todosPerPage={todosPerPages}
