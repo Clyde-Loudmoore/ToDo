@@ -8,13 +8,14 @@ function RenderTodos({
   todosPerPages,
   setTodos,
   hangleToggle,
-  removeTask,
   value,
   setValue,
-  edit,
-  setEdit,
   saveTodo,
   sortedTasks,
+  axiosDelete,
+  axiosPatch,
+  setEdit,
+  edit,
 }) {
   return sortedTasks
     .sort((a, b) => {
@@ -29,16 +30,17 @@ function RenderTodos({
       return (
         <ToDo
           todo={todo}
-          key={todo.id}
+          key={todo.uuid}
           todos={todos}
           setTodos={setTodos}
           hangleToggle={hangleToggle}
-          removeTask={removeTask}
           value={value}
           setValue={setValue}
-          edit={edit}
-          setEdit={setEdit}
           saveTodo={saveTodo}
+          axiosDelete={axiosDelete}
+          axiosPatch={axiosPatch}
+          setEdit={setEdit}
+          edit={edit}
         />
       );
     });

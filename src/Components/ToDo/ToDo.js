@@ -6,34 +6,40 @@ function ToDo({
   todos,
   todo,
   hangleToggle,
-  removeTask,
   setTodos,
   value,
   setValue,
   saveTodo,
+  axiosDelete,
+  axiosPatch,
+  edit,
+  setEdit,
 }) {
-  const editTodo = (id) => {
+  const editTodo = (uuid) => {
     setTodos(
       todos.map((todo) =>
-        todo.id === id ? { ...todo, edit: !todo.edit } : todo
+        todo.uuid === uuid ? { ...todo, edit: !todo.edit } : todo
       )
     );
     setValue(todo.task);
   };
 
-  const handlePressKey = (e, id) => {
+  const handlePressKey = (e, uuid) => {
     if (e.key === "Enter") {
-      saveTodo(id, value);
+      saveTodo(uuid, value);
     }
     if (e.key === "Escape") {
-      editTodo(id);
+      editTodo(uuid);
     }
   };
 
-
+  const setEditInput = (uuid) => {
+    setEdit(uuid);
+    axiosPatch(uuid, value);
+  };
 
   return (
-    <div key={todo.id} className="list">
+    <div key={todo.uuid} className="list">
       <ul className="todo">
         <li>
           <div className="list_left">
@@ -41,44 +47,47 @@ function ToDo({
               type="checkbox"
               className="done"
               checked={todo.status}
-              onClick={() => hangleToggle(todo.id)}
+              onClick={() => hangleToggle(todo.uuid)}
               readOnly
             />
           </div>
-          {todo.edit ? (
+          {edit === todo.uuid ? (
             <div>
               <input
                 autoFocus
-                key={todo.id}
+                key={todo.uuid}
                 className="list_change"
                 onChange={(e) => setValue(e.target.value)}
                 value={value}
-                onBlur={() => editTodo(todo.id)}
-                onKeyDown={(e) => handlePressKey(e, todo.id)}
+                onBlur={() => editTodo(todo.uuid)}
+                onKeyDown={(e) => handlePressKey(e, todo.uuid)}
               />
             </div>
           ) : (
             <div className="list_between">
-              <p>{todo.task}</p>
+              <p>{todo.name}</p>
             </div>
           )}
-          {todo.edit ? (
+          {edit === todo.uuid ? (
             <button
               className="list_save"
-              onClick={() => saveTodo(todo.id, value)}
+              onClick={() => saveTodo(todo.uuid, value)}
             >
               save
             </button>
           ) : (
             <div className="list_right">
-              <button className="list_edit" onClick={() => editTodo(todo.id)}>
+              <button
+                className="list_edit"
+                onClick={() => setEditInput(todo.uuid)}
+              >
                 edit
               </button>
-              <time>{todo.createdAt.toLocaleTimeString()}</time>
+              <time>{todo.createdAt.substr(11, 8)}</time>
               <button
                 className="list_delete"
                 type="button"
-                onClick={() => removeTask(todo.id)}
+                onClick={() => axiosDelete(todo.uuid)}
               >
                 <img src={Delete} alt="delete" />
               </button>

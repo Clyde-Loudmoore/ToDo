@@ -9,24 +9,13 @@ import RenderTodos from "./Components/RenderTodos/RenderTodos";
 
 const todosPerPages = 5;
 
-// axios
-//   .get(
-//     "https://todo-api-learning.herokuapp.com/v1/tasks/1?order=asc&pp=5&page=1"
-//   )
-//   .then((response) => {
-//     console.log(response.data);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
-
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [pagesCount, setPagesCount] = useState(todos.length);
   const [filters, setFilters] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [edit, setEdit] = useState();
   const [userInput, setUserInput] = useState("");
   const [value, setValue] = useState("");
 
@@ -34,12 +23,62 @@ export default function App() {
 
   const [sortedTasks, setSortedTasks] = useState([]);
 
-  const saveTodo = (id) => {
+  const axiosGet = () => {
+    axios
+      .get(
+        `https://todo-api-learning.herokuapp.com/v1/tasks/1?order=&pp=5&page=${currentPage}`
+      )
+      .then((response) => {
+        // console.log(response.data.tasks);
+        setTodos(response.data.tasks);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const axiosPost = (task) => {
+    axios
+      .post("https://todo-api-learning.herokuapp.com/v1/task/1", task)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const axiosPatch = (uuid, userInput) => {
+    axios
+      .patch(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`, {
+        name: userInput,
+      })
+      .then((response) => {
+        setEdit(value);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const axiosDelete = (uuid) => {
+    axios
+      .delete(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const saveTodo = (uuid) => {
     const title = value;
     if (title) {
       setTodos(
         todos.map((item) =>
-          item.id === id ? { ...item, task: title, edit: false } : item
+          item.uuid === uuid ? { ...item, task: title, edit: false } : item
         )
       );
       setValue("");
@@ -59,26 +98,29 @@ export default function App() {
   const addTask = (userInput) => {
     if (userInput) {
       const newItem = {
-        id: Math.random().toString(36),
-        task: userInput,
-        status: false,
-        createdAt: new Date(),
+        name: userInput,
       };
-      setTodos([...todos, newItem]);
+
+      axiosPost(newItem);
+      axiosGet();
     }
   };
 
-  const removeTask = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const removeTask = (uuid) => {
+    setTodos(todos.filter((todo) => todo.uuid !== uuid));
   };
 
-  const hangleToggle = (id) => {
+  const hangleToggle = (uuid) => {
     setTodos(
       todos.map((todo) =>
-        todo.id === id ? { ...todo, status: !todo.status } : todo
+        todo.uuid === uuid ? { ...todo, status: !todo.status } : todo
       )
     );
   };
+
+  useEffect(() => {
+    axiosGet();
+  }, [statusFilter, currentPage, sortedTasks]);
 
   useEffect(() => {
     const countOfTodos = todos.filter((todo) => {
@@ -126,6 +168,10 @@ export default function App() {
           saveTodo={saveTodo}
           statusFilter={statusFilter}
           sortedTasks={sortedTasks}
+          axiosDelete={axiosDelete}
+          axiosPatch={axiosPatch}
+          setEdit={setEdit}
+          edit={edit}
         />
         <Pagination
           todosPerPage={todosPerPages}

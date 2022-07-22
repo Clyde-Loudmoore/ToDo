@@ -8,7 +8,7 @@ const Pagination = ({ paginate, totalTodos }) => {
         <button className="page-item_btn" onClick={() => paginate(1)}>
           &lt;&lt;
         </button>
-        {Array.from(Array(totalTodos).keys()).map((number, index) => (
+        {Array.from(Array(totalTodos).keys()).map((_, index) => (
           <li className="page-item" key={index + 1}>
             <button
               className="page-item_btn"

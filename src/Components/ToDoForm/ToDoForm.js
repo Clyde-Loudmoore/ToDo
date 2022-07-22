@@ -1,8 +1,12 @@
 import React from "react";
 import "./ToDoForm.css";
 
-
-export default function ToDoForm({ addTask, userInput, setUserInput }) {
+export default function ToDoForm({
+  addTask,
+  userInput,
+  setUserInput,
+  axiosGet,
+}) {
   const hangleChange = (e) => {
     setUserInput(e.currentTarget.value);
   };
@@ -19,8 +23,6 @@ export default function ToDoForm({ addTask, userInput, setUserInput }) {
     }
   };
 
-
-
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -31,8 +33,7 @@ export default function ToDoForm({ addTask, userInput, setUserInput }) {
         onKeyDown={handleKeyPress}
         placeholder="I want to..."
       />
-      <button className="add"
-      >Add</button>
+      <button className="add">Add</button>
     </form>
   );
 }
