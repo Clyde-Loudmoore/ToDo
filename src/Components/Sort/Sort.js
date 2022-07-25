@@ -3,7 +3,11 @@ import Down from "../../img/down.png";
 import Up from "../../img/up.png";
 import "./Sort.css";
 
+
 function Sort({ todoFilter, setFilters, setCurrentPage }) {
+
+  
+
   return (
     <div className="sort">
       <div className="sort_btns">

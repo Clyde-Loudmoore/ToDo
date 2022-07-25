@@ -9,7 +9,6 @@ function ToDo({
   setTodos,
   value,
   setValue,
-  saveTodo,
   axiosDelete,
   axiosPatch,
   edit,
@@ -22,11 +21,12 @@ function ToDo({
       )
     );
     setValue(todo.task);
+    axiosPatch(todo.uuid, value);
   };
 
   const handlePressKey = (e, uuid) => {
     if (e.key === "Enter") {
-      saveTodo(uuid, value);
+      axiosPatch(todo.uuid, value);
     }
     if (e.key === "Escape") {
       editTodo(uuid);
@@ -34,8 +34,8 @@ function ToDo({
   };
 
   const setEditInput = (uuid) => {
+    setValue(todo.name);
     setEdit(uuid);
-    axiosPatch(uuid, value);
   };
 
   return (
@@ -46,8 +46,8 @@ function ToDo({
             <input
               type="checkbox"
               className="done"
-              checked={todo.status}
-              onClick={() => hangleToggle(todo.uuid)}
+              checked={todo.done}
+              onClick={() => hangleToggle(todo.done, todo.uuid)}
               readOnly
             />
           </div>
@@ -71,7 +71,7 @@ function ToDo({
           {edit === todo.uuid ? (
             <button
               className="list_save"
-              onClick={() => saveTodo(todo.uuid, value)}
+              onClick={() => axiosPatch(todo.uuid, value)}
             >
               save
             </button>

@@ -10,7 +10,6 @@ function RenderTodos({
   hangleToggle,
   value,
   setValue,
-  saveTodo,
   sortedTasks,
   axiosDelete,
   axiosPatch,
@@ -36,7 +35,6 @@ function RenderTodos({
           hangleToggle={hangleToggle}
           value={value}
           setValue={setValue}
-          saveTodo={saveTodo}
           axiosDelete={axiosDelete}
           axiosPatch={axiosPatch}
           setEdit={setEdit}

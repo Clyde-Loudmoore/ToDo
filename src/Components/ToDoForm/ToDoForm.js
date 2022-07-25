@@ -5,7 +5,6 @@ export default function ToDoForm({
   addTask,
   userInput,
   setUserInput,
-  axiosGet,
 }) {
   const hangleChange = (e) => {
     setUserInput(e.currentTarget.value);
