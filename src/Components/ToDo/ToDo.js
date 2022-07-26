@@ -7,8 +7,8 @@ function ToDo({
   todo,
   hangleToggle,
   setTodos,
-  value,
-  setValue,
+  meaning,
+  setMeaning,
   axiosDelete,
   axiosPatch,
   edit,
@@ -20,13 +20,13 @@ function ToDo({
         todo.uuid === uuid ? { ...todo, edit: !todo.edit } : todo
       )
     );
-    setValue(todo.task);
-    axiosPatch(todo.uuid, value);
+    setMeaning(todo.task);
+    axiosPatch(todo.uuid, meaning);
   };
 
   const handlePressKey = (e, uuid) => {
     if (e.key === "Enter") {
-      axiosPatch(todo.uuid, value);
+      axiosPatch(todo.uuid, meaning);
     }
     if (e.key === "Escape") {
       editTodo(uuid);
@@ -34,7 +34,7 @@ function ToDo({
   };
 
   const setEditInput = (uuid) => {
-    setValue(todo.name);
+    setMeaning(todo.name);
     setEdit(uuid);
   };
 
@@ -57,8 +57,8 @@ function ToDo({
                 autoFocus
                 key={todo.uuid}
                 className="list_change"
-                onChange={(e) => setValue(e.target.value)}
-                value={value}
+                onChange={(e) => setMeaning(e.target.value)}
+                value={meaning}
                 onBlur={() => editTodo(todo.uuid)}
                 onKeyDown={(e) => handlePressKey(e, todo.uuid)}
               />
@@ -71,7 +71,7 @@ function ToDo({
           {edit === todo.uuid ? (
             <button
               className="list_save"
-              onClick={() => axiosPatch(todo.uuid, value)}
+              onClick={() => axiosPatch(todo.uuid, meaning)}
             >
               save
             </button>

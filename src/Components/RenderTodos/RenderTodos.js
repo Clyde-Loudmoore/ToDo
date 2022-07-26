@@ -5,8 +5,8 @@ function RenderTodos({
   todos,
   setTodos,
   hangleToggle,
-  value,
-  setValue,
+  meaning,
+  setMeaning,
   axiosDelete,
   axiosPatch,
   setEdit,
@@ -20,8 +20,8 @@ function RenderTodos({
           todos={todos}
           setTodos={setTodos}
           hangleToggle={hangleToggle}
-          value={value}
-          setValue={setValue}
+          meaning={meaning}
+          setMeaning={setMeaning}
           axiosDelete={axiosDelete}
           axiosPatch={axiosPatch}
           setEdit={setEdit}

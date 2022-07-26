@@ -1,9 +1,10 @@
 import React from "react";
 import "./Pagination.css";
 
-const Pagination = ({ paginate, totalTodos }) => {
-  const x = totalTodos / 5;
+const Pagination = ({ paginate, pagesCount }) => {
+  const x = pagesCount / 5;
   const y = Math.ceil(x);
+
   return (
     <div>
       <ul className="pagination">
@@ -20,7 +21,10 @@ const Pagination = ({ paginate, totalTodos }) => {
             </button>
           </li>
         ))}
-        <button className="page-item_btn" onClick={() => paginate(totalTodos)}>
+        <button
+          className="page-item_btn"
+          onClick={() => paginate(pagesCount)}
+        >
           &gt;&gt;
         </button>
       </ul>

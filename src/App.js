@@ -17,7 +17,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [edit, setEdit] = useState();
   const [userInput, setUserInput] = useState("");
-  const [value, setValue] = useState("");
+  const [meaning, setMeaning] = useState("");
   const [todoFilter, setTodoFilter] = useState("");
 
   const axiosGet = () => {
@@ -43,6 +43,9 @@ export default function App() {
   const axiosPost = (task) => {
     axios
       .post("https://todo-api-learning.herokuapp.com/v1/task/1", task)
+      .then(() => {
+        axiosGet();
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -54,9 +57,10 @@ export default function App() {
         name: userInput,
       })
       .then((response) => {
-        setEdit(value);
+        setEdit(meaning);
         saveTodo(uuid);
         console.log(response);
+        axiosGet();
       })
       .catch((error) => {
         console.error(error);
@@ -68,6 +72,7 @@ export default function App() {
       .delete(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`)
       .then((response) => {
         console.log(response);
+        axiosGet();
       })
       .catch((error) => {
         console.error(error);
@@ -75,14 +80,14 @@ export default function App() {
   };
 
   const saveTodo = (uuid) => {
-    const title = value;
+    const title = meaning;
     if (title) {
       setTodos(
         todos.map((todo) =>
           todo.uuid === uuid ? { ...todo, task: title, edit: false } : todo
         )
       );
-      setValue("");
+      setMeaning("");
     }
   };
 
@@ -95,7 +100,6 @@ export default function App() {
       const newItem = {
         name: userInput,
       };
-
       axiosPost(newItem);
     }
   };
@@ -117,7 +121,7 @@ export default function App() {
 
   useEffect(() => {
     axiosGet();
-  }, [todoFilter, currentPage, filters,]);
+  }, [todoFilter, currentPage, filters]);
 
   return (
     <div className="App">
@@ -125,7 +129,7 @@ export default function App() {
         <header className="header">
           <h1>ToDo</h1>
           <h2>Task list: {todos.length}</h2>
-          <h3>number of pages: {pagesCount}</h3>
+          {/* <h3>number of pages: {pagesCount}</h3> */}
 
           <ToDoForm
             addTask={addTask}
@@ -143,8 +147,8 @@ export default function App() {
           todos={todos}
           setTodos={setTodos}
           hangleToggle={hangleToggle}
-          value={value}
-          setValue={setValue}
+          meaning={meaning}
+          setMeaning={setMeaning}
           axiosDelete={axiosDelete}
           axiosPatch={axiosPatch}
           setEdit={setEdit}
@@ -153,7 +157,7 @@ export default function App() {
         />
         <Pagination
           todosPerPage={todosPerPages}
-          totalTodos={pagesCount}
+          pagesCount={pagesCount}
           paginate={paginate}
         />
       </div>
