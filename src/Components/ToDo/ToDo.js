@@ -25,10 +25,12 @@ function ToDo({
   };
 
   const handlePressKey = (e, uuid) => {
+    console.log(e, uuid);
     if (e.key === "Enter") {
       axiosPatch(todo.uuid, meaning);
     }
     if (e.key === "Escape") {
+      axiosPatch(todo.uuid, meaning);
       editTodo(uuid);
     }
   };
@@ -58,13 +60,16 @@ function ToDo({
                 key={todo.uuid}
                 className="list_change"
                 onChange={(e) => setMeaning(e.target.value)}
-                value={meaning}
+                defaultValue={meaning}
                 onBlur={() => editTodo(todo.uuid)}
                 onKeyDown={(e) => handlePressKey(e, todo.uuid)}
               />
             </div>
           ) : (
-            <div className="list_between">
+            <div
+              className="list_between"
+              onDoubleClick={() => setEditInput(todo.uuid)}
+            >
               <p>{todo.name}</p>
             </div>
           )}

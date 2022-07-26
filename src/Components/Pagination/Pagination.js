@@ -23,7 +23,7 @@ const Pagination = ({ paginate, pagesCount }) => {
         ))}
         <button
           className="page-item_btn"
-          onClick={() => paginate(pagesCount)}
+          onClick={() => paginate(Math.ceil(pagesCount/5))}
         >
           &gt;&gt;
         </button>

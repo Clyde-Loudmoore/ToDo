@@ -51,15 +51,15 @@ export default function App() {
       });
   };
 
-  const axiosPatch = (uuid, userInput) => {
+  const axiosPatch = (uuid) => {
     axios
       .patch(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`, {
-        name: userInput,
+        name: meaning,
       })
       .then((response) => {
         setEdit(meaning);
         saveTodo(uuid);
-        console.log(response);
+        // console.log(response);
         axiosGet();
       })
       .catch((error) => {
@@ -105,7 +105,7 @@ export default function App() {
   };
 
   const hangleToggle = (done, uuid) => {
-    console.log(done, uuid);
+    // console.log(done, uuid);
     axios
       .patch(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`, {
         done: !done,
@@ -116,6 +116,7 @@ export default function App() {
             todo.uuid === uuid ? { ...todo, done: !todo.done } : todo
           )
         );
+        
       });
   };
 
@@ -128,8 +129,8 @@ export default function App() {
       <div className="base">
         <header className="header">
           <h1>ToDo</h1>
-          <h2>Task list: {todos.length}</h2>
-          {/* <h3>number of pages: {pagesCount}</h3> */}
+          <h2>Task list: {pagesCount}</h2>
+          <h3>number of pages: {Math.ceil(pagesCount/5)}</h3>
 
           <ToDoForm
             addTask={addTask}
