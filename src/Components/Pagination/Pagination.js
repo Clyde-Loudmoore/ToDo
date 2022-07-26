@@ -2,13 +2,15 @@ import React from "react";
 import "./Pagination.css";
 
 const Pagination = ({ paginate, totalTodos }) => {
+  const x = totalTodos / 5;
+  const y = Math.ceil(x);
   return (
     <div>
       <ul className="pagination">
         <button className="page-item_btn" onClick={() => paginate(1)}>
           &lt;&lt;
         </button>
-        {Array.from(Array(totalTodos).keys()).map((_, index) => (
+        {Array.from(Array(y).keys()).map((_, index) => (
           <li className="page-item" key={index + 1}>
             <button
               className="page-item_btn"

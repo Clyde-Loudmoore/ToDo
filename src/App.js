@@ -11,33 +11,33 @@ const todosPerPages = 5;
 
 export default function App() {
   const [todos, setTodos] = useState([]);
-  const [pagesCount, setPagesCount] = useState();
+  const [pagesCount, setPagesCount] = useState(0);
   const [filters, setFilters] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [edit, setEdit] = useState();
   const [userInput, setUserInput] = useState("");
   const [value, setValue] = useState("");
-
-  const [statusFilter, setStatusFilter] = useState(0);
-
-  const [sortedTasks, setSortedTasks] = useState([]);
+  const [todoFilter, setTodoFilter] = useState("");
 
   const axiosGet = () => {
     axios
-      .get(
-        `https://todo-api-learning.herokuapp.com/v1/tasks/1?order=${
-          filters === 0 ? "asc" : "desc"
-        }&pp=5&page=${currentPage}`
-      )
+      .get("https://todo-api-learning.herokuapp.com/v1/tasks/1", {
+        params: {
+          filterBy: todoFilter,
+          order: filters === 0 ? "asc" : "desc",
+          pp: 5,
+          page: currentPage,
+        },
+      })
       .then((response) => {
+        // console.log(response);
         setTodos(response.data.tasks);
         setPagesCount(response.data.count);
       })
       .catch((error) => {
         console.error(error);
       });
-    console.log(filters);
   };
 
   const axiosPost = (task) => {
@@ -86,14 +86,8 @@ export default function App() {
     }
   };
 
-  const todoFilter = (status) => setStatusFilter(status);
-  const pageNumber = [];
-  for (let i = 1; i <= Math.ceil(pagesCount / todosPerPages); i++) {
-    pageNumber.push(i);
-  }
-
-  const paginate = () => {
-    setCurrentPage(pageNumber);
+  const paginate = (e) => {
+    setCurrentPage(e);
   };
 
   const addTask = (userInput) => {
@@ -103,7 +97,6 @@ export default function App() {
       };
 
       axiosPost(newItem);
-      axiosGet();
     }
   };
 
@@ -124,21 +117,7 @@ export default function App() {
 
   useEffect(() => {
     axiosGet();
-  }, [statusFilter, currentPage, filters]);
-
-  useEffect(() => {
-    const countOfTodos = todos.filter((todo) => {
-      if (statusFilter === 0) return true;
-      else if (statusFilter === 1 && todo.status) {
-        return true;
-      } else if (statusFilter === 2 && !todo.status) {
-        return true;
-      }
-    });
-
-    setSortedTasks(countOfTodos);
-    setPagesCount(Math.ceil(countOfTodos.length / todosPerPages));
-  }, [filters, todos, statusFilter]);
+  }, [todoFilter, currentPage, filters,]);
 
   return (
     <div className="App">
@@ -158,21 +137,18 @@ export default function App() {
           setCurrentPage={setCurrentPage}
           setFilters={setFilters}
           todoFilter={todoFilter}
+          setTodoFilter={setTodoFilter}
         />
         <RenderTodos
           todos={todos}
-          filters={filters}
-          currentPage={currentPage}
-          todosPerPages={todosPerPages}
           setTodos={setTodos}
           hangleToggle={hangleToggle}
           value={value}
           setValue={setValue}
-          statusFilter={statusFilter}
-          sortedTasks={sortedTasks}
           axiosDelete={axiosDelete}
           axiosPatch={axiosPatch}
           setEdit={setEdit}
+          setStatusFilter
           edit={edit}
         />
         <Pagination

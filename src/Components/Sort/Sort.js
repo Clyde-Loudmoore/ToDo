@@ -3,11 +3,7 @@ import Down from "../../img/down.png";
 import Up from "../../img/up.png";
 import "./Sort.css";
 
-
-function Sort({ todoFilter, setFilters, setCurrentPage }) {
-
-  
-
+function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
   return (
     <div className="sort">
       <div className="sort_btns">
@@ -16,7 +12,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage }) {
           className="sort_btn"
           onClick={() => {
             setCurrentPage(1);
-            todoFilter(0);
+            setTodoFilter("");
           }}
         >
           All
@@ -26,7 +22,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage }) {
           className="sort_btn"
           onClick={() => {
             setCurrentPage(1);
-            todoFilter(1);
+            setTodoFilter("done");
           }}
         >
           Done
@@ -36,7 +32,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage }) {
           className="sort_btn"
           onClick={() => {
             setCurrentPage(1);
-            todoFilter(2);
+            setTodoFilter("undone");
           }}
         >
           Undone

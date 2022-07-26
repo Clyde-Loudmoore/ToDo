@@ -3,29 +3,16 @@ import ToDo from "../ToDo/ToDo";
 
 function RenderTodos({
   todos,
-  filters,
-  currentPage,
-  todosPerPages,
   setTodos,
   hangleToggle,
   value,
   setValue,
-  sortedTasks,
   axiosDelete,
   axiosPatch,
   setEdit,
   edit,
 }) {
-  return sortedTasks
-    .sort((a, b) => {
-      if (filters === 0) return a.createdAt - b.createdAt;
-      return b.createdAt - a.createdAt;
-    })
-    .slice(
-      (currentPage - 1) * todosPerPages,
-      (currentPage - 1) * todosPerPages + todosPerPages
-    )
-    .map((todo) => {
+  return todos.map((todo) => {
       return (
         <ToDo
           todo={todo}
