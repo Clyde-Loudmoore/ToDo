@@ -1,5 +1,6 @@
 import React from "react";
 import "./Pagination.css";
+import { DoubleLeftOutlined, DoubleRightOutlined } from "@ant-design/icons";
 
 const Pagination = ({ paginate, pagesCount }) => {
   const x = pagesCount / 5;
@@ -8,9 +9,7 @@ const Pagination = ({ paginate, pagesCount }) => {
   return (
     <div>
       <ul className="pagination">
-        <button className="page-item_btn" onClick={() => paginate(1)}>
-          &lt;&lt;
-        </button>
+        <DoubleLeftOutlined onClick={() => paginate(1)} />
         {Array.from(Array(y).keys()).map((_, index) => (
           <li className="page-item" key={index + 1}>
             <button
@@ -21,12 +20,9 @@ const Pagination = ({ paginate, pagesCount }) => {
             </button>
           </li>
         ))}
-        <button
-          className="page-item_btn"
-          onClick={() => paginate(Math.ceil(pagesCount/5))}
-        >
-          &gt;&gt;
-        </button>
+        <DoubleRightOutlined
+          onClick={() => paginate(Math.ceil(pagesCount / 5))}
+        />
       </ul>
     </div>
   );

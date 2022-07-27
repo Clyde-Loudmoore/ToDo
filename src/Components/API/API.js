@@ -6,4 +6,3 @@ const axiosInstance = axios.create({
 });
 
 // axios.get("https://todo-api-learning.herokuapp.com/v1/tasks/1?order=asc&pp=5&page=1").then((res) => {console.log(res.data)})
-

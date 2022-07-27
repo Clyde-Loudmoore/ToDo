@@ -1,6 +1,6 @@
 import React from "react";
 import "./ToDo.css";
-import Delete from "../../img/delete.png";
+import { DeleteOutlined } from "@ant-design/icons";
 
 function ToDo({
   todos,
@@ -89,13 +89,7 @@ function ToDo({
                 edit
               </button>
               <time>{todo.createdAt.substr(11, 8)}</time>
-              <button
-                className="list_delete"
-                type="button"
-                onClick={() => axiosDelete(todo.uuid)}
-              >
-                <img src={Delete} alt="delete" />
-              </button>
+              <DeleteOutlined onClick={() => axiosDelete(todo.uuid)} />
             </div>
           )}
         </li>
@@ -105,3 +99,4 @@ function ToDo({
 }
 
 export default ToDo;
+

@@ -116,7 +116,6 @@ export default function App() {
             todo.uuid === uuid ? { ...todo, done: !todo.done } : todo
           )
         );
-        
       });
   };
 
@@ -130,7 +129,7 @@ export default function App() {
         <header className="header">
           <h1>ToDo</h1>
           <h2>Task list: {pagesCount}</h2>
-          <h3>number of pages: {Math.ceil(pagesCount/5)}</h3>
+          <h3>number of pages: {Math.ceil(pagesCount / 5)}</h3>
 
           <ToDoForm
             addTask={addTask}

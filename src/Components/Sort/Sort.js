@@ -1,7 +1,6 @@
 import React from "react";
-import Down from "../../img/down.png";
-import Up from "../../img/up.png";
 import "./Sort.css";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
   return (
@@ -40,12 +39,8 @@ function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
       </div>
       <div className="sort_date">
         <p>Sort by Date</p>
-        <button className="sort_date__btn" type="button">
-          <img src={Up} alt="Up" onClick={() => setFilters(0)} />
-        </button>
-        <button className="sort_date__btn" type="button">
-          <img src={Down} alt="Down" onClick={() => setFilters(1)} />
-        </button>
+        <ArrowUpOutlined onClick={() => setFilters(0)} />
+        <ArrowDownOutlined onClick={() => setFilters(1)} />
       </div>
     </div>
   );
