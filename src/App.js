@@ -35,9 +35,7 @@ export default function App() {
         setTodos(response.data.tasks);
         setPagesCount(response.data.count);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch((error) => {});
   };
 
   const axiosPost = (task) => {
@@ -47,7 +45,7 @@ export default function App() {
         axiosGet();
       })
       .catch((error) => {
-        console.error(error);
+        alert("ERROR 400: Task not created");
       });
   };
 
@@ -59,11 +57,11 @@ export default function App() {
       .then((response) => {
         setEdit(meaning);
         saveTodo(uuid);
-        // console.log(response);
         axiosGet();
       })
       .catch((error) => {
         console.error(error);
+        alert("ERROR 400: Task not created, enter something..");
       });
   };
 
@@ -75,7 +73,8 @@ export default function App() {
         axiosGet();
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
+        alert("ERROR 404: Task not found");
       });
   };
 

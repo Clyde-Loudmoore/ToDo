@@ -30,7 +30,6 @@ function ToDo({
       axiosPatch(todo.uuid, meaning);
     }
     if (e.key === "Escape") {
-      axiosPatch(todo.uuid, meaning);
       editTodo(uuid);
     }
   };
@@ -99,4 +98,3 @@ function ToDo({
 }
 
 export default ToDo;
-
