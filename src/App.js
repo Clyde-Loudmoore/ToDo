@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import swal from "sweetalert";
+
 import React, { useEffect, useState } from "react";
 import ToDoForm from "./Components/ToDoForm/ToDoForm";
 import "./App.css";
@@ -45,7 +47,7 @@ export default function App() {
         axiosGet();
       })
       .catch((error) => {
-        alert("ERROR 400: Task not created");
+        swal("ERROR 400:", "Task not created");
       });
   };
 
@@ -61,7 +63,7 @@ export default function App() {
       })
       .catch((error) => {
         console.error(error);
-        alert("ERROR 400: Task not created, enter something..");
+        swal("ERROR 400:", "Task not created, enter something..");
       });
   };
 
@@ -73,8 +75,7 @@ export default function App() {
         axiosGet();
       })
       .catch((error) => {
-        // console.error(error);
-        alert("ERROR 404: Task not found");
+        swal("ERROR 404:", "Task not found");
       });
   };
 
