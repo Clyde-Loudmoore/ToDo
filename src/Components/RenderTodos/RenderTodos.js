@@ -7,10 +7,12 @@ function RenderTodos({
   hangleToggle,
   meaning,
   setMeaning,
-  axiosDelete,
-  axiosPatch,
+  deleteAxios,
+  patchAxios,
   setEdit,
   edit,
+  axiosPatchDone,
+  getAxios,
 }) {
   return todos.map((todo) => {
       return (
@@ -22,10 +24,12 @@ function RenderTodos({
           hangleToggle={hangleToggle}
           meaning={meaning}
           setMeaning={setMeaning}
-          axiosDelete={axiosDelete}
-          axiosPatch={axiosPatch}
+          deleteAxios={deleteAxios}
+          patchAxios={patchAxios}
           setEdit={setEdit}
           edit={edit}
+          axiosPatchDone={axiosPatchDone}
+          getAxios={getAxios}
         />
       );
     });

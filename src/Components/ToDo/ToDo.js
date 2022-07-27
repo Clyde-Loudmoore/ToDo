@@ -9,10 +9,12 @@ function ToDo({
   setTodos,
   meaning,
   setMeaning,
-  axiosDelete,
-  axiosPatch,
+  deleteAxios,
+  patchAxios,
   edit,
   setEdit,
+  axiosPatchDone,
+  getAxios,
 }) {
   const editTodo = (uuid) => {
     setTodos(
@@ -21,13 +23,13 @@ function ToDo({
       )
     );
     setMeaning(todo.task);
-    axiosPatch(todo.uuid, meaning);
+    patchAxios(todo.uuid, meaning);
   };
 
   const handlePressKey = (e, uuid) => {
     console.log(e, uuid);
     if (e.key === "Enter") {
-      axiosPatch(todo.uuid, meaning);
+      patchAxios(todo.uuid, meaning);
     }
     if (e.key === "Escape") {
       editTodo(uuid);
@@ -48,7 +50,10 @@ function ToDo({
               type="checkbox"
               className="done"
               checked={todo.done}
-              onClick={() => hangleToggle(todo.done, todo.uuid)}
+              onClick={async () => {
+                await axiosPatchDone(todo.done, todo.uuid);
+                getAxios();
+              }}
               readOnly
             />
           </div>
@@ -75,7 +80,7 @@ function ToDo({
           {edit === todo.uuid ? (
             <button
               className="list_save"
-              onClick={() => axiosPatch(todo.uuid, meaning)}
+              onClick={() => patchAxios(todo.uuid, meaning)}
             >
               save
             </button>
@@ -88,7 +93,7 @@ function ToDo({
                 edit
               </button>
               <time>{todo.createdAt.substr(11, 8)}</time>
-              <DeleteOutlined onClick={() => axiosDelete(todo.uuid)} />
+              <DeleteOutlined onClick={() => deleteAxios(todo.uuid)} />
             </div>
           )}
         </li>

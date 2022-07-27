@@ -1,10 +1,17 @@
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+
+import {
+  axiosGet,
+  axiosPost,
+  axiosPatch,
+  axiosPatchDone,
+  axiosDelete,
+} from "./Components/API/API";
 
 import swal from "sweetalert";
 
-import React, { useEffect, useState } from "react";
 import ToDoForm from "./Components/ToDoForm/ToDoForm";
-import "./App.css";
 import Pagination from "./Components/Pagination/Pagination";
 import Sort from "./Components/Sort/Sort";
 import RenderTodos from "./Components/RenderTodos/RenderTodos";
@@ -22,57 +29,44 @@ export default function App() {
   const [meaning, setMeaning] = useState("");
   const [todoFilter, setTodoFilter] = useState("");
 
-  const axiosGet = () => {
-    axios
-      .get("https://todo-api-learning.herokuapp.com/v1/tasks/1", {
-        params: {
-          filterBy: todoFilter,
-          order: filters === 0 ? "asc" : "desc",
-          pp: 5,
-          page: currentPage,
-        },
-      })
-      .then((response) => {
-        // console.log(response);
-        setTodos(response.data.tasks);
-        setPagesCount(response.data.count);
-      })
-      .catch((error) => {});
+  const getAxios = async () => {
+    try {
+      const response = await axiosGet(todoFilter, filters, currentPage);
+
+      setTodos(response.data.tasks);
+      setPagesCount(response.data.count);
+    } catch (err) {
+      swal(err.message);
+    }
   };
 
-  const axiosPost = (task) => {
-    axios
-      .post("https://todo-api-learning.herokuapp.com/v1/task/1", task)
+  const postAxios = async (task) => {
+    try {
+      await axiosPost(task);
+    } catch (err) {
+      swal("ERROR 400:", "Task not created");
+    }
+    getAxios();
+  };
+
+  const patchAxios = (done, uuid) => {
+    axiosPatch(done, uuid)
       .then(() => {
-        axiosGet();
-      })
-      .catch((error) => {
-        swal("ERROR 400:", "Task not created");
-      });
-  };
-
-  const axiosPatch = (uuid) => {
-    axios
-      .patch(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`, {
-        name: meaning,
-      })
-      .then((response) => {
         setEdit(meaning);
         saveTodo(uuid);
-        axiosGet();
+        getAxios();
       })
       .catch((error) => {
         console.error(error);
-        swal("ERROR 400:", "Task not created, enter something..");
+        swal("ERROR 400:", "Task not created, write something..");
       });
   };
 
-  const axiosDelete = (uuid) => {
-    axios
-      .delete(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`)
+  const deleteAxios = async (uuid) => {
+    axiosDelete(uuid)
       .then((response) => {
         console.log(response);
-        axiosGet();
+        getAxios();
       })
       .catch((error) => {
         swal("ERROR 404:", "Task not found");
@@ -100,27 +94,22 @@ export default function App() {
       const newItem = {
         name: userInput,
       };
-      axiosPost(newItem);
+      postAxios(newItem);
     }
   };
 
-  const hangleToggle = (done, uuid) => {
+  const hangleToggle = async (done, uuid) => {
     // console.log(done, uuid);
-    axios
-      .patch(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`, {
-        done: !done,
-      })
-      .then(() => {
-        setTodos(
-          todos.map((todo) =>
-            todo.uuid === uuid ? { ...todo, done: !todo.done } : todo
-          )
-        );
-      });
+    // axios
+    //   .patch(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`, {
+    //     done: !done,
+    //   })
+
+    getAxios();
   };
 
   useEffect(() => {
-    axiosGet();
+    getAxios();
   }, [todoFilter, currentPage, filters]);
 
   return (
@@ -149,11 +138,13 @@ export default function App() {
           hangleToggle={hangleToggle}
           meaning={meaning}
           setMeaning={setMeaning}
-          axiosDelete={axiosDelete}
-          axiosPatch={axiosPatch}
+          deleteAxios={deleteAxios}
+          patchAxios={patchAxios}
           setEdit={setEdit}
           setStatusFilter
           edit={edit}
+          axiosPatchDone={axiosPatchDone}
+          getAxios={getAxios}
         />
         <Pagination
           todosPerPage={todosPerPages}
