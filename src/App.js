@@ -52,7 +52,6 @@ export default function App() {
   const patchAxios = (done, uuid) => {
     axiosPatch(done, uuid)
       .then(() => {
-        setEdit(meaning);
         saveTodo(uuid);
         getAxios();
       })
@@ -62,7 +61,7 @@ export default function App() {
       });
   };
 
-  const deleteAxios = async (uuid) => {
+  const deleteAxios = (uuid) => {
     axiosDelete(uuid)
       .then((response) => {
         console.log(response);
@@ -81,7 +80,6 @@ export default function App() {
           todo.uuid === uuid ? { ...todo, task: title, edit: false } : todo
         )
       );
-      setMeaning("");
     }
   };
 
@@ -96,16 +94,6 @@ export default function App() {
       };
       postAxios(newItem);
     }
-  };
-
-  const hangleToggle = async (done, uuid) => {
-    // console.log(done, uuid);
-    // axios
-    //   .patch(`https://todo-api-learning.herokuapp.com/v1/task/1/${uuid}`, {
-    //     done: !done,
-    //   })
-
-    getAxios();
   };
 
   useEffect(() => {
@@ -135,7 +123,6 @@ export default function App() {
         <RenderTodos
           todos={todos}
           setTodos={setTodos}
-          hangleToggle={hangleToggle}
           meaning={meaning}
           setMeaning={setMeaning}
           deleteAxios={deleteAxios}

@@ -54,6 +54,7 @@
 }
 .list_between {
   max-width: 115px;
+  word-break: break-all;
 }
 
 .list_change {

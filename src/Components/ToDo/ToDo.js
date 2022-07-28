@@ -5,7 +5,6 @@ import { DeleteOutlined } from "@ant-design/icons";
 function ToDo({
   todos,
   todo,
-  hangleToggle,
   setTodos,
   meaning,
   setMeaning,
@@ -22,23 +21,24 @@ function ToDo({
         todo.uuid === uuid ? { ...todo, edit: !todo.edit } : todo
       )
     );
-    setMeaning(todo.task);
+    setMeaning(todo.name);
     patchAxios(todo.uuid, meaning);
   };
 
   const handlePressKey = (e, uuid) => {
-    console.log(e, uuid);
     if (e.key === "Enter") {
+      setEdit(null);
       patchAxios(todo.uuid, meaning);
     }
     if (e.key === "Escape") {
+      setEdit(null);
       editTodo(uuid);
     }
   };
 
-  const setEditInput = (uuid) => {
+  const setEditInput = (todo) => {
     setMeaning(todo.name);
-    setEdit(uuid);
+    setEdit(todo.uuid);
   };
 
   return (
@@ -65,8 +65,13 @@ function ToDo({
                 className="list_change"
                 onChange={(e) => setMeaning(e.target.value)}
                 defaultValue={meaning}
-                onBlur={() => editTodo(todo.uuid)}
-                onKeyDown={(e) => handlePressKey(e, todo.uuid)}
+                onBlur={() => {
+                  setEdit(null);
+                  editTodo(todo.uuid);
+                }}
+                onKeyDown={(e) => {
+                  handlePressKey(e, todo.uuid);
+                }}
               />
             </div>
           ) : (
@@ -74,7 +79,7 @@ function ToDo({
               className="list_between"
               onDoubleClick={() => setEditInput(todo.uuid)}
             >
-              <p>{todo.name}</p>
+              {todo.name}
             </div>
           )}
           {edit === todo.uuid ? (
@@ -86,10 +91,7 @@ function ToDo({
             </button>
           ) : (
             <div className="list_right">
-              <button
-                className="list_edit"
-                onClick={() => setEditInput(todo.uuid)}
-              >
+              <button className="list_edit" onClick={() => setEditInput(todo)}>
                 edit
               </button>
               <time>{todo.createdAt.substr(11, 8)}</time>
