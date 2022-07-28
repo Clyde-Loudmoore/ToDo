@@ -18,15 +18,16 @@ export const axiosGet = (filterTaskStatus, sortByDate, currentPage) =>
 export const axiosPost = async (task) =>
   await axiosInstance.post(`/task/1`, task);
 
-export const axiosPatch = (uuid, inputValue) =>
+export const axiosPatch = (done, uuid, name) => {
+  console.log(done, uuid, name);
   axiosInstance.patch(`/task/1/${uuid}`, {
-    name: inputValue,
-  });
-
-export const axiosPatchDone = async (done, uuid) => {
-  ///////////////////
-  await axiosInstance.patch(`/task/1/${uuid}`, {
-    done: !done,
+    done,
+    name,
   });
 };
+// export const axiosPatchDone = async (done, uuid) => {
+//   ///////////////////
+//   await axiosInstance.patch(`/task/1/${uuid}`, {
+//   });
+// };
 export const axiosDelete = (uuid) => axiosInstance.delete(`/task/1/${uuid}`);

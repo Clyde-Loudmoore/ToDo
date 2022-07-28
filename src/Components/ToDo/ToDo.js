@@ -8,11 +8,10 @@ function ToDo({
   setTodos,
   inputValue,
   setInputValue,
-  deleteTaskById,
+  deleteTaskByUuid,
   updateTask,
   editTask,
   setEditTask,
-  axiosPatchDone,
   getTasksList,
 }) {
   const editTodo = (uuid) => {
@@ -25,7 +24,7 @@ function ToDo({
     updateTask(todo.uuid, inputValue);
   };
 
-  const handlePressKey = (e, uuid) => {
+  const handlePressKey = (e, uuid, inputValue) => {
     if (e.key === "Enter") {
       setEditTask(null);
       updateTask(todo.uuid, inputValue);
@@ -51,7 +50,7 @@ function ToDo({
               className="done"
               checked={todo.done}
               onClick={async () => {
-                await axiosPatchDone(todo.done, todo.uuid);
+                await updateTask(todo.done, todo.uuid);
                 getTasksList();
               }}
               readOnly
@@ -95,7 +94,7 @@ function ToDo({
                 edit
               </button>
               <time>{todo.createdAt.substr(11, 8)}</time>
-              <DeleteOutlined onClick={() => deleteTaskById(todo.uuid)} />
+              <DeleteOutlined onClick={() => deleteTaskByUuid(todo.uuid)} />
             </div>
           )}
         </li>

@@ -9,6 +9,8 @@ import {
   axiosDelete,
 } from "./Components/API/API";
 
+import { NUMBER_OF_PAGES, SORT_BY_DATE } from "./Constants";
+
 import swal from "sweetalert";
 
 import ToDoForm from "./Components/ToDoForm/ToDoForm";
@@ -18,8 +20,8 @@ import RenderTodos from "./Components/RenderTodos/RenderTodos";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
-  const [pagesCount, setPagesCount] = useState(0);
-  const [sortByDate, setSortByDate] = useState(0);
+  const [pagesCount, setPagesCount] = useState(NUMBER_OF_PAGES);
+  const [sortByDate, setSortByDate] = useState(SORT_BY_DATE.ASC);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [editTask, setEditTask] = useState();
@@ -52,9 +54,9 @@ export default function App() {
   };
 
   const updateTask = (done, uuid) => {
-    axiosPatch(done, uuid)
+    axiosPatch(done, uuid, inputValue)
       .then(() => {
-        saveTodo(uuid);
+        // saveTodo(uuid);
         getTasksList();
       })
       .catch((error) => {
@@ -63,7 +65,7 @@ export default function App() {
       });
   };
 
-  const deleteTaskById = (uuid) => {
+  const deleteTaskByUuid = (uuid) => {
     axiosDelete(uuid)
       .then((response) => {
         console.log(response);
@@ -74,16 +76,16 @@ export default function App() {
       });
   };
 
-  const saveTodo = (uuid) => {
-    const title = inputValue;
-    if (title) {
-      setTodos(
-        todos.map((todo) =>
-          todo.uuid === uuid ? { ...todo, task: title, edit: false } : todo
-        )
-      );
-    }
-  };
+  // const saveTodo = (uuid) => {
+  //   const title = inputValue;
+  //   if (title) {
+  //     setTodos(
+  //       todos.map((todo) =>
+  //         todo.uuid === uuid ? { ...todo, task: title, edit: false } : todo
+  //       )
+  //     );
+  //   }
+  // };
 
   const paginate = (e) => {
     setCurrentPage(e);
@@ -127,12 +129,11 @@ export default function App() {
           setTodos={setTodos}
           inputValue={inputValue}
           setInputValue={setInputValue}
-          deleteTaskById={deleteTaskById}
+          deleteTaskByUuid={deleteTaskByUuid}
           updateTask={updateTask}
           setStatusFilter
           setEditTask={setEditTask}
           editTask={editTask}
-          axiosPatchDone={axiosPatchDone}
           getTasksList={getTasksList}
         />
         <Pagination pagesCount={pagesCount} paginate={paginate} />

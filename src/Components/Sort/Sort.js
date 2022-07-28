@@ -2,6 +2,8 @@ import React from "react";
 import "./Sort.css";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
+import { SORT_BY_DATE } from "../../Constants";
+
 function Sort({ setSortByDate, setCurrentPage, setFilterTaskStatus }) {
   return (
     <div className="sort">
@@ -39,8 +41,8 @@ function Sort({ setSortByDate, setCurrentPage, setFilterTaskStatus }) {
       </div>
       <div className="sort_date">
         <p>Sort by Date</p>
-        <ArrowUpOutlined onClick={() => setSortByDate(0)} />
-        <ArrowDownOutlined onClick={() => setSortByDate(1)} />
+        <ArrowUpOutlined onClick={() => setSortByDate(SORT_BY_DATE.ASC)} />
+        <ArrowDownOutlined onClick={() => setSortByDate(SORT_BY_DATE.DESC)} />
       </div>
     </div>
   );

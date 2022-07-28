@@ -6,11 +6,10 @@ function RenderTodos({
   setTodos,
   inputValue,
   setInputValue,
-  deleteTaskById,
+  deleteTaskByUuid,
   updateTask,
   editTask,
   setEditTask,
-  axiosPatchDone,
   getTasksList,
 }) {
   return todos.map((todo) => {
@@ -22,11 +21,10 @@ function RenderTodos({
         setTodos={setTodos}
         inputValue={inputValue}
         setInputValue={setInputValue}
-        deleteTaskById={deleteTaskById}
+        deleteTaskByUuid={deleteTaskByUuid}
         updateTask={updateTask}
         editTask={editTask}
         setEditTask={setEditTask}
-        axiosPatchDone={axiosPatchDone}
         getTasksList={getTasksList}
       />
     );
