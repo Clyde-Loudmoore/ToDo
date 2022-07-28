@@ -16,22 +16,24 @@ import Pagination from "./Components/Pagination/Pagination";
 import Sort from "./Components/Sort/Sort";
 import RenderTodos from "./Components/RenderTodos/RenderTodos";
 
-const todosPerPages = 5;
-
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [pagesCount, setPagesCount] = useState(0);
-  const [filters, setFilters] = useState(0);
+  const [sortByDate, setSortByDate] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [edit, setEdit] = useState();
-  const [userInput, setUserInput] = useState("");
-  const [meaning, setMeaning] = useState("");
-  const [todoFilter, setTodoFilter] = useState("");
+  const [editTask, setEditTask] = useState();
+  const [userInputField, setUserInputField] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [filterTaskStatus, setFilterTaskStatus] = useState("");
 
-  const getAxios = async () => {
+  const getTasksList = async () => {
     try {
-      const response = await axiosGet(todoFilter, filters, currentPage);
+      const response = await axiosGet(
+        filterTaskStatus,
+        sortByDate,
+        currentPage
+      );
 
       setTodos(response.data.tasks);
       setPagesCount(response.data.count);
@@ -40,20 +42,20 @@ export default function App() {
     }
   };
 
-  const postAxios = async (task) => {
+  const createTask = async (task) => {
     try {
       await axiosPost(task);
     } catch (err) {
       swal("ERROR 400:", "Task not created");
     }
-    getAxios();
+    getTasksList();
   };
 
-  const patchAxios = (done, uuid) => {
+  const updateTask = (done, uuid) => {
     axiosPatch(done, uuid)
       .then(() => {
         saveTodo(uuid);
-        getAxios();
+        getTasksList();
       })
       .catch((error) => {
         console.error(error);
@@ -61,11 +63,11 @@ export default function App() {
       });
   };
 
-  const deleteAxios = (uuid) => {
+  const deleteTaskById = (uuid) => {
     axiosDelete(uuid)
       .then((response) => {
         console.log(response);
-        getAxios();
+        getTasksList();
       })
       .catch((error) => {
         swal("ERROR 404:", "Task not found");
@@ -73,7 +75,7 @@ export default function App() {
   };
 
   const saveTodo = (uuid) => {
-    const title = meaning;
+    const title = inputValue;
     if (title) {
       setTodos(
         todos.map((todo) =>
@@ -87,18 +89,18 @@ export default function App() {
     setCurrentPage(e);
   };
 
-  const addTask = (userInput) => {
-    if (userInput) {
+  const addTask = (userInputField) => {
+    if (userInputField) {
       const newItem = {
-        name: userInput,
+        name: userInputField,
       };
-      postAxios(newItem);
+      createTask(newItem);
     }
   };
 
   useEffect(() => {
-    getAxios();
-  }, [todoFilter, currentPage, filters]);
+    getTasksList();
+  }, [filterTaskStatus, currentPage, sortByDate]);
 
   return (
     <div className="App">
@@ -110,34 +112,30 @@ export default function App() {
 
           <ToDoForm
             addTask={addTask}
-            userInput={userInput}
-            setUserInput={setUserInput}
+            userInputField={userInputField}
+            setUserInputField={setUserInputField}
           />
         </header>
         <Sort
           setCurrentPage={setCurrentPage}
-          setFilters={setFilters}
-          todoFilter={todoFilter}
-          setTodoFilter={setTodoFilter}
+          setSortByDate={setSortByDate}
+          filterTaskStatus={filterTaskStatus}
+          setFilterTaskStatus={setFilterTaskStatus}
         />
         <RenderTodos
           todos={todos}
           setTodos={setTodos}
-          meaning={meaning}
-          setMeaning={setMeaning}
-          deleteAxios={deleteAxios}
-          patchAxios={patchAxios}
-          setEdit={setEdit}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          deleteTaskById={deleteTaskById}
+          updateTask={updateTask}
           setStatusFilter
-          edit={edit}
+          setEditTask={setEditTask}
+          editTask={editTask}
           axiosPatchDone={axiosPatchDone}
-          getAxios={getAxios}
+          getTasksList={getTasksList}
         />
-        <Pagination
-          todosPerPage={todosPerPages}
-          pagesCount={pagesCount}
-          paginate={paginate}
-        />
+        <Pagination pagesCount={pagesCount} paginate={paginate} />
       </div>
     </div>
   );

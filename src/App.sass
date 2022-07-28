@@ -2,6 +2,7 @@ $color: #5f5f5f
 $bgcolor: #8ec8d8
 $bncolor: #cde3e9
 $font: 14px 'Inconsolata', monospace
+$tshadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa, 0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa
 
 .base
     width: 350px
@@ -12,6 +13,7 @@ $font: 14px 'Inconsolata', monospace
     color: $color
     background-color: $bgcolor
     font: $font
+    text-shadow: $tshadow
 
 .header
     display: flex
@@ -23,11 +25,16 @@ $font: 14px 'Inconsolata', monospace
         height: 30px
         padding-left: 15px
         font: $font
+        text-shadow: $tshadow
         border: 1px solid $color
         border-radius: 10px
     h1
         margin-bottom: 0
+        text-shadow: $tshadow
     h2
         margin-top: 15px
+        text-shadow: $tshadow
+
     h3
         margin-top: 5
+        text-shadow: $tshadow

@@ -2,7 +2,7 @@ import React from "react";
 import "./Sort.css";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
-function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
+function Sort({ setSortByDate, setCurrentPage, setFilterTaskStatus }) {
   return (
     <div className="sort">
       <div className="sort_btns">
@@ -11,7 +11,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
           className="sort_btn"
           onClick={() => {
             setCurrentPage(1);
-            setTodoFilter("");
+            setFilterTaskStatus("");
           }}
         >
           All
@@ -21,7 +21,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
           className="sort_btn"
           onClick={() => {
             setCurrentPage(1);
-            setTodoFilter("done");
+            setFilterTaskStatus("done");
           }}
         >
           Done
@@ -31,7 +31,7 @@ function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
           className="sort_btn"
           onClick={() => {
             setCurrentPage(1);
-            setTodoFilter("undone");
+            setFilterTaskStatus("undone");
           }}
         >
           Undone
@@ -39,8 +39,8 @@ function Sort({ todoFilter, setFilters, setCurrentPage, setTodoFilter }) {
       </div>
       <div className="sort_date">
         <p>Sort by Date</p>
-        <ArrowUpOutlined onClick={() => setFilters(0)} />
-        <ArrowDownOutlined onClick={() => setFilters(1)} />
+        <ArrowUpOutlined onClick={() => setSortByDate(0)} />
+        <ArrowDownOutlined onClick={() => setSortByDate(1)} />
       </div>
     </div>
   );

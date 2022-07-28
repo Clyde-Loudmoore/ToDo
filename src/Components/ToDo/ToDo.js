@@ -6,14 +6,14 @@ function ToDo({
   todos,
   todo,
   setTodos,
-  meaning,
-  setMeaning,
-  deleteAxios,
-  patchAxios,
-  edit,
-  setEdit,
+  inputValue,
+  setInputValue,
+  deleteTaskById,
+  updateTask,
+  editTask,
+  setEditTask,
   axiosPatchDone,
-  getAxios,
+  getTasksList,
 }) {
   const editTodo = (uuid) => {
     setTodos(
@@ -21,24 +21,24 @@ function ToDo({
         todo.uuid === uuid ? { ...todo, edit: !todo.edit } : todo
       )
     );
-    setMeaning(todo.name);
-    patchAxios(todo.uuid, meaning);
+    setInputValue(todo.name);
+    updateTask(todo.uuid, inputValue);
   };
 
   const handlePressKey = (e, uuid) => {
     if (e.key === "Enter") {
-      setEdit(null);
-      patchAxios(todo.uuid, meaning);
+      setEditTask(null);
+      updateTask(todo.uuid, inputValue);
     }
     if (e.key === "Escape") {
-      setEdit(null);
+      setEditTask(null);
       editTodo(uuid);
     }
   };
 
   const setEditInput = (todo) => {
-    setMeaning(todo.name);
-    setEdit(todo.uuid);
+    setInputValue(todo.name);
+    setEditTask(todo.uuid);
   };
 
   return (
@@ -52,21 +52,21 @@ function ToDo({
               checked={todo.done}
               onClick={async () => {
                 await axiosPatchDone(todo.done, todo.uuid);
-                getAxios();
+                getTasksList();
               }}
               readOnly
             />
           </div>
-          {edit === todo.uuid ? (
+          {editTask === todo.uuid ? (
             <div>
               <input
                 autoFocus
                 key={todo.uuid}
                 className="list_change"
-                onChange={(e) => setMeaning(e.target.value)}
-                defaultValue={meaning}
+                onChange={(e) => setInputValue(e.target.value)}
+                defaultValue={inputValue}
                 onBlur={() => {
-                  setEdit(null);
+                  setEditTask(null);
                   editTodo(todo.uuid);
                 }}
                 onKeyDown={(e) => {
@@ -82,10 +82,10 @@ function ToDo({
               {todo.name}
             </div>
           )}
-          {edit === todo.uuid ? (
+          {editTask === todo.uuid ? (
             <button
               className="list_save"
-              onClick={() => patchAxios(todo.uuid, meaning)}
+              onClick={() => updateTask(todo.uuid, inputValue)}
             >
               save
             </button>
@@ -95,7 +95,7 @@ function ToDo({
                 edit
               </button>
               <time>{todo.createdAt.substr(11, 8)}</time>
-              <DeleteOutlined onClick={() => deleteAxios(todo.uuid)} />
+              <DeleteOutlined onClick={() => deleteTaskById(todo.uuid)} />
             </div>
           )}
         </li>

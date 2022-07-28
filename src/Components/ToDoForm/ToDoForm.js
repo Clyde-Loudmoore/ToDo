@@ -3,17 +3,17 @@ import "./ToDoForm.css";
 
 export default function ToDoForm({
   addTask,
-  userInput,
-  setUserInput,
+  userInputField,
+  setUserInputField,
 }) {
   const hangleChange = (e) => {
-    setUserInput(e.currentTarget.value);
+    setUserInputField(e.currentTarget.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTask(userInput);
-    setUserInput("");
+    addTask(userInputField);
+    setUserInputField("");
   };
 
   const handleKeyPress = (e) => {
@@ -26,7 +26,7 @@ export default function ToDoForm({
     <form onSubmit={handleSubmit}>
       <input
         className="message"
-        value={userInput}
+        value={userInputField}
         type="text"
         onChange={hangleChange}
         onKeyDown={handleKeyPress}
