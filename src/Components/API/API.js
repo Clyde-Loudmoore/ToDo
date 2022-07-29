@@ -19,6 +19,7 @@ export const axiosPost = async (task) =>
   await axiosInstance.post(`/task/1`, task);
 
 export const axiosPatch = async (uuid, inputValue, todo) => {
+  // console.log(inputValue);
   await axiosInstance.patch(
     `/task/1/${uuid}`,
 

@@ -52,10 +52,11 @@ export default function App() {
     getTasksList();
   };
 
-  const updateTask = async (uuid, done) => {
-    console.log(uuid, inputValue, done);
+  const updateTask = async (uuid) => {
+    console.log(uuid);
     try {
-      await axiosPatch(uuid, inputValue, done);
+      await axiosPatch(uuid, inputValue);
+      setInputValue("");
       getTasksList();
     } catch (err) {
       swal("ERROR 400:", "Task not created, write something..");

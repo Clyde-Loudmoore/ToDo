@@ -19,6 +19,7 @@ function ToDo({
   const handlePressKey = (e) => {
     if (e.key === "Enter") {
       setEditTask(null);
+      setInputValue(todo.name);
       editTodo(todo.uuid);
     }
     if (e.key === "Escape") {
@@ -51,12 +52,12 @@ function ToDo({
                 key={todo.uuid}
                 className="list_change"
                 onChange={(e) => setInputValue(e.target.value)}
-                defaultValue={inputValue}
-                // onBlur={() => {
-                //   setEditTask(null);
+                value={inputValue}
+                onBlur={() => {
+                  setEditTask(null);
 
-                //   // editTodo(todo.uuid);
-                // }}
+                  editTodo(todo.uuid);
+                }}
                 onKeyDown={(e) => {
                   {
                     handlePressKey(e);
@@ -73,15 +74,7 @@ function ToDo({
             </div>
           )}
           {editTask === todo.uuid ? (
-            <button
-              className="list_save"
-              onClick={() => {
-                setEditTask(null);
-                editTodo(todo.uuid);
-              }}
-            >
-              save
-            </button>
+            <button className="list_save">save</button>
           ) : (
             <div className="list_right">
               <button className="list_edit" onClick={() => setEditInput(todo)}>
