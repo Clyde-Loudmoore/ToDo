@@ -5,7 +5,6 @@ import {
   axiosGet,
   axiosPost,
   axiosPatch,
-  axiosPatchDone,
   axiosDelete,
 } from "./Components/API/API";
 
@@ -53,39 +52,24 @@ export default function App() {
     getTasksList();
   };
 
-  const updateTask = (done, uuid) => {
-    axiosPatch(done, uuid, inputValue)
-      .then(() => {
-        // saveTodo(uuid);
-        getTasksList();
-      })
-      .catch((error) => {
-        console.error(error);
-        swal("ERROR 400:", "Task not created, write something..");
-      });
+  const updateTask = async (uuid, done) => {
+    console.log(uuid, inputValue, done);
+    try {
+      await axiosPatch(uuid, inputValue, done);
+      getTasksList();
+    } catch (err) {
+      swal("ERROR 400:", "Task not created, write something..");
+    }
   };
 
-  const deleteTaskByUuid = (uuid) => {
-    axiosDelete(uuid)
-      .then((response) => {
-        console.log(response);
-        getTasksList();
-      })
-      .catch((error) => {
-        swal("ERROR 404:", "Task not found");
-      });
+  const deleteTaskByUuid = async (uuid) => {
+    try {
+      await axiosDelete(uuid);
+      getTasksList();
+    } catch (err) {
+      swal("ERROR 404:", "Task not found");
+    }
   };
-
-  // const saveTodo = (uuid) => {
-  //   const title = inputValue;
-  //   if (title) {
-  //     setTodos(
-  //       todos.map((todo) =>
-  //         todo.uuid === uuid ? { ...todo, task: title, edit: false } : todo
-  //       )
-  //     );
-  //   }
-  // };
 
   const paginate = (e) => {
     setCurrentPage(e);

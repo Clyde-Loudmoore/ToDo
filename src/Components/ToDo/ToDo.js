@@ -3,35 +3,26 @@ import "./ToDo.css";
 import { DeleteOutlined } from "@ant-design/icons";
 
 function ToDo({
-  todos,
   todo,
-  setTodos,
   inputValue,
   setInputValue,
   deleteTaskByUuid,
   updateTask,
   editTask,
   setEditTask,
-  getTasksList,
 }) {
-  const editTodo = (uuid) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.uuid === uuid ? { ...todo, edit: !todo.edit } : todo
-      )
-    );
+  const editTodo = () => {
     setInputValue(todo.name);
     updateTask(todo.uuid, inputValue);
   };
 
-  const handlePressKey = (e, uuid, inputValue) => {
+  const handlePressKey = (e) => {
     if (e.key === "Enter") {
       setEditTask(null);
-      updateTask(todo.uuid, inputValue);
+      editTodo(todo.uuid);
     }
     if (e.key === "Escape") {
       setEditTask(null);
-      editTodo(uuid);
     }
   };
 
@@ -49,10 +40,7 @@ function ToDo({
               type="checkbox"
               className="done"
               checked={todo.done}
-              onClick={async () => {
-                await updateTask(todo.done, todo.uuid);
-                getTasksList();
-              }}
+              onClick={() => updateTask(todo.done)}
               readOnly
             />
           </div>
@@ -64,19 +52,22 @@ function ToDo({
                 className="list_change"
                 onChange={(e) => setInputValue(e.target.value)}
                 defaultValue={inputValue}
-                onBlur={() => {
-                  setEditTask(null);
-                  editTodo(todo.uuid);
-                }}
+                // onBlur={() => {
+                //   setEditTask(null);
+
+                //   // editTodo(todo.uuid);
+                // }}
                 onKeyDown={(e) => {
-                  handlePressKey(e, todo.uuid);
+                  {
+                    handlePressKey(e);
+                  }
                 }}
               />
             </div>
           ) : (
             <div
               className="list_between"
-              onDoubleClick={() => setEditInput(todo.uuid)}
+              onDoubleClick={() => setEditInput(todo)}
             >
               {todo.name}
             </div>
@@ -84,7 +75,10 @@ function ToDo({
           {editTask === todo.uuid ? (
             <button
               className="list_save"
-              onClick={() => updateTask(todo.uuid, inputValue)}
+              onClick={() => {
+                setEditTask(null);
+                editTodo(todo.uuid);
+              }}
             >
               save
             </button>
