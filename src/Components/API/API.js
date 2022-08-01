@@ -18,12 +18,12 @@ export const axiosGet = (filterTaskStatus, sortByDate, currentPage) =>
 export const axiosPost = async (task) =>
   await axiosInstance.post(`/task/1`, task);
 
-export const axiosPatch = async (uuid, inputValue, todo) => {
-  // console.log(inputValue);
+export const axiosPatch = async (uuid, done, name) => {
   await axiosInstance.patch(
     `/task/1/${uuid}`,
+    { done, name }
 
-    inputValue === "" ? { done: !todo.done } : { name: inputValue }
+    // inputValue === "" ? { done: !todo.done } : { name: inputValue }
   );
 };
 

@@ -52,14 +52,27 @@ export default function App() {
     getTasksList();
   };
 
-  const updateTask = async (uuid) => {
-    console.log(uuid);
+  const updateTask = async (uuid, _, name) => {
+    console.log(uuid, name);
     try {
-      await axiosPatch(uuid, inputValue);
+      await axiosPatch(uuid, _, name);
       setInputValue("");
       getTasksList();
+      // swal("OK!")
     } catch (err) {
       swal("ERROR 400:", "Task not created, write something..");
+    }
+  };
+
+  const updateTaskDone = async (uuid, done, _) => {
+    console.log(uuid, done);
+    try {
+      await axiosPatch(uuid, done, _);
+      setInputValue("");
+      getTasksList();
+      // swal("OK!")
+    } catch (err) {
+      swal("ERROR 400:", "The event did not happen");
     }
   };
 
@@ -120,6 +133,7 @@ export default function App() {
           setEditTask={setEditTask}
           editTask={editTask}
           getTasksList={getTasksList}
+          updateTaskDone={updateTaskDone}
         />
         <Pagination pagesCount={pagesCount} paginate={paginate} />
       </div>

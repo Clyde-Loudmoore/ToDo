@@ -11,6 +11,7 @@ function RenderTodos({
   editTask,
   setEditTask,
   getTasksList,
+  updateTaskDone,
 }) {
   return todos.map((todo) => {
     return (
@@ -26,6 +27,7 @@ function RenderTodos({
         editTask={editTask}
         setEditTask={setEditTask}
         getTasksList={getTasksList}
+        updateTaskDone={updateTaskDone}
       />
     );
   });

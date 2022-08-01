@@ -10,17 +10,18 @@ function ToDo({
   updateTask,
   editTask,
   setEditTask,
+  updateTaskDone,
 }) {
   const editTodo = () => {
     setInputValue(todo.name);
-    updateTask(todo.uuid, inputValue);
+    updateTask(todo.uuid, todo.done, inputValue);
+    updateTaskDone(todo.uuid, todo.done, inputValue);
   };
 
   const handlePressKey = (e) => {
     if (e.key === "Enter") {
       setEditTask(null);
-      setInputValue(todo.name);
-      editTodo(todo.uuid);
+      editTodo(inputValue);
     }
     if (e.key === "Escape") {
       setEditTask(null);
@@ -41,7 +42,8 @@ function ToDo({
               type="checkbox"
               className="done"
               checked={todo.done}
-              onClick={() => updateTask(todo.done)}
+              // onChange={() => console.log("Checked!")}
+              onClick={() => updateTaskDone(todo.uuid, !todo.done)}
               readOnly
             />
           </div>
